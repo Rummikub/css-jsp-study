@@ -12,7 +12,17 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Detail</title>
+<link rel="stylesheet" href="../css/bootstrap.min.css">
+<style type="text/css">
+.row {
+	margin: 0px auto;
+	width: 800px;
+}
+h2 {
+	text-align: center;
+}
+</style>
 </head>
 <body>
 

@@ -166,9 +166,229 @@ public class BoardDAO {
 			}
 			return vo;
 		}
-		// 수정
 		
-		//삭제
+		// 수정 - detail  *************  비밀번호가 맞는지 틀리는지 = boolean
+		public boolean boardUpdate(BoardVO vo)
+		{
+			boolean bCheck=false;
+			try {
+				getConnection();
+				//1)비밀번호 검색 
+				String sql="SELECT pwd FROM replyBoard "
+						+ "WHERE no=?";
+				ps=conn.prepareStatement(sql);
+			
+				//? 값을 채워서 DB에 보내야 겠지
+				ps.setInt(1, vo.getNo());
+				ResultSet rs=ps.executeQuery();
+				rs.next();
+				
+				//2)맞는지 여부
+				String db_pwd=rs.getString(1);
+				rs.close();
+				
+				if(db_pwd.equals(vo.getPwd()))
+				{
+				 	bCheck=true;
+				 	sql="UPDATE replyBoard SET "
+				 			+ "name=?,subject=?,content=? "
+				 			+ "WHERE no=?";
+				 	ps=conn.prepareStatement(sql);
+				 	ps.setString(1,vo.getName());
+				 	ps.setString(2, vo.getSubject());
+				 	ps.setString(3, vo.getContent());
+				 	ps.setInt(4,vo.getNo());
+				 	
+				 	ps.executeUpdate(); // commit ;
+				}
+				else
+				{
+					 bCheck=false;
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				disConnection();
+			}
+			return bCheck;
+		}
 		
-		//답변
+
+		//답변 - list  (일종의 insert)
+		public void replyInsert(int pno,BoardVO vo)
+		{
+			try {
+				getConnection();
+				
+				//*************************************//
+				conn.setAutoCommit(false);
+				//************************************//
+				
+				
+				//_id, _step, _tab 값을 DB에서 읽어와   (from pno)
+				String sql="SELECT group_id,group_step,group_tab "
+						+ "FROM replyBoard "
+						+ "WHERE no=?";
+				ps=conn.prepareStatement(sql);
+				ps.setInt(1, pno);
+				
+				
+				ResultSet rs=ps.executeQuery();
+				rs.next();
+				
+				int gi=rs.getInt(1);
+				int gs=rs.getInt(2);
+				int gt=rs.getInt(3);
+				
+				rs.close();
+				
+				//★★답변형 게시판 핵심 Query★★★★★★★★★★★★★★★★★★★
+				/*			DESC	   ASC
+						 		gi 		gs		gt
+					AAA		1		0		0 
+					->B		1		0+1	1	  
+					  ->C		1		1+1	2
+					   ->D 	1		2+1	3
+					->E		1		0+1	1
+					->F		1		1		1   ==> 맨 위로 위치시키고 gs를 +1씩
+				 */
+				
+				sql="UPDATE replyBoard SET "								//값을 수정해줘
+					+ "group_step=group_step+1 "							//gs+1
+					+ "WHERE group_id=? AND group_step>?";		// gi==입력값  gs>입력값인 조건에서
+				ps=conn.prepareStatement(sql);
+				ps.setInt(1, gi);
+				ps.setInt(2, gs);
+				
+				
+				ps.executeUpdate();
+				//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+				
+				
+				//데이터 추가
+				  sql="INSERT INTO replyBoard(no,name,subject,content,pwd,group_id,group_step,group_tab,root) VALUES("
+						     +"rb_no_seq.nextval,?,?,?,?,?,?,?,?)";
+				
+				ps=conn.prepareStatement(sql);
+				ps.setString(1, vo.getName());
+				ps.setString(2,  vo.getSubject());
+				ps.setString(3, vo.getContent());
+				ps.setString(4, vo.getPwd());
+				
+				ps.setInt(5, gi);
+				ps.setInt(6, gs+1); // STEP
+				ps.setInt(7, gt+1); // TAB
+				ps.setInt(8, pno); // ROOT
+				ps.executeUpdate();
+				
+				//depth 증가 = 바로 하위에 답변이 몇개 달렸니  (depth=0 ; delete 可)
+				sql="UPDATE replyBoard SET "
+						+ "depth=depth+1 "
+						+ "WHERE no=?";
+				
+				ps=conn.prepareStatement(sql);
+				ps.setInt(1, pno);
+				ps.executeUpdate();
+				
+				
+				/*★Transaction Program의 필요성 ; 다~ 취소할 수 있음 ★ 
+				-if COMMIT; 이 날아가는데, 위의 sql문이 잘못 됐을 경우를 대비 =  ROLLBACK이 되지 않는 문제 발생
+				-try catch에서 롤백 or 정상수행
+				-UPDATE, DELTE, INSERT를 한 sql에서 섞어서 쓸 경우에 자주 발생한다
+				 */
+			
+				conn.commit();
+				//*************************************//
+				
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+				
+				//***********************************//
+				try {
+					conn.rollback();
+				} catch (Exception e2) {}
+				//***********************************//
+				
+			}finally {
+				
+				//***********************************//	
+				try{
+				    conn.setAutoCommit(true);
+				} catch (Exception ex) {}
+				//***********************************//	
+				disConnection();
+			}
+		}
+		//삭제 - list
+		public int boardDelete(int no,String pwd)
+		{
+			int result=0;
+			try {
+				getConnection();
+				String sql="SELECT pwd FROM replyBoard "
+						+ "WHERE no=?";
+				
+				ps=conn.prepareStatement(sql);
+				ps.setInt(1, no);
+				ResultSet rs=ps.executeQuery();
+				rs.next();
+				String db_pwd=rs.getString(1);
+				rs.close();
+				
+				if(db_pwd.equals(pwd))
+				{
+					result=1;
+					sql="SELECT root,depth FROM replyBoard "
+							+ "WHERE no=?";
+					ps=conn.prepareStatement(sql);
+					ps.setInt(1, no);
+					rs=ps.executeQuery();
+					rs.next();
+					
+					//DB에서 읽어온 값
+					int root=rs.getInt(1);
+					int depth=rs.getInt(2);
+					rs.close();
+					
+					if(depth==0)
+					{
+						sql="DELETE FROM replyBoard "
+								+ "WHERE no=?";
+						ps=conn.prepareStatement(sql);
+						ps.setInt(1, no);
+						ps.executeUpdate();
+					}
+					else
+					{
+							String msg="관리자가 삭제한 게시물";
+							sql="UPDATE replyBoard SET "
+									+ "subject=?,content=? "
+									+ "WHERE no=?";                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+							ps=conn.prepareStatement(sql);
+							ps.setString(1, msg);
+							ps.setString(2, msg);
+							ps.setInt(3, no);
+							ps.executeUpdate();
+							
+							sql="UPDATE replyBoard SET "
+									+ "depth=depth-1 "
+									+ "WHERE no=?";
+							ps=conn.prepareStatement(sql);
+							ps.setInt(1, root);
+							ps.executeUpdate();
+					}
+				}
+				else
+				{
+					result=0;
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				disConnection();
+			}
+			return result;
+		}
+		
 }

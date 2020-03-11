@@ -1,5 +1,3 @@
-<!-- 앞으로 _ok.jsp는 화면 출력용이 아니라 DB랑 연결하는 용도  -->
-
 <%@page import="com.sist.dao.BoardVO"%>
 <%@page import="com.sist.dao.BoardDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -17,6 +15,8 @@
  		String subject=request.getParameter("subject");
  		String content=request.getParameter("content");
  		String pwd=request.getParameter("pwd");
+ 		String pno=request.getParameter("pno");
+ 		String strPage=request.getParameter("page");
  		
  		BoardVO vo=new BoardVO();
  		vo.setName(name);
@@ -26,8 +26,9 @@
  		
  		//DAO 연결
  		BoardDAO  dao=new BoardDAO();
- 		dao.boardInsert(vo);
+ 		//**vo값을 넣어주는 것은 아님
+ 		dao.replyInsert(Integer.parseInt(pno), vo);
  		
- 		//이동 -> list.jsp
-		response.sendRedirect("list.jsp");
+ 		//**list.jsp ======> 지금 보고 있는!*****
+		response.sendRedirect("list.jsp?page="+strPage);
  %>

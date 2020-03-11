@@ -1,11 +1,21 @@
+<!-- insert.jsp와 동일 -->
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
- <!--!!!!!!!!!!!!!!!!!!!!!!!!!  HTML 5 ver 로 변경!!!!!!!!!!! NOT NULL인 변수 =  required!!!!!!!!!!!! -->
+    pageEncoding="UTF-8" import="com.sist.dao.*"%>
+   
+ <%
+ 		String no=request.getParameter("no");
+ 		String strPage=request.getParameter("page");
+ 		
+ 		//DAO연결 - type=1 수정
+ 		BoardDAO dao=new BoardDAO();
+ 		BoardVO vo=dao.boardDetailData(Integer.parseInt(no), 1);
+ %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta  charset="UTF-8">
-<title>글쓰기</title>
+<title>수정하기</title>
 <link rel="stylesheet" href="../css/bootstrap.min.css">
 <style type="text/css">
 .row {
@@ -19,33 +29,34 @@ h2 {
 </head>
 <body>
 	<div	 class="container">
-		<h2>글쓰기</h2>
+		<h2>수정하기</h2>
 		<div class="row">
 		
-		
-			<!--  insert_ok로 넘어가는 이유 : java가 먼저 수행된다 (즉, null값이 default) 
-			=ALSO=> not null 걸려있는 항목때문에 같은 화면 insert.jsp에서 처리할 수 없다-->
-		
-			<form method=post  action="insert_ok.jsp">
+			<form method=post  action="update_ok.jsp">
 			<table class="table table-hover">
 				<tr>
 					<th width=20% class="text-right  success">이름</th>
 					<td width=80%>
-						<input type="text" name=name size=15 required>
+						<input type="text" name=name size=15 required  value="<%=vo.getName()%>">
+						
+						<!-- 데이터 숨기기 ; 화면상에는 보이지 않지만 데이터는 보내짐 -->
+						<input type=hidden name=no value="<%=no %>">
+						<input type=hidden name=page value="<%=strPage %>">
 						</td>
 				</tr>
 				
 				<tr>
 					<th width=20% class="text-right  success">제목</th>
 					<td width=80%>
-						<input type="text" name=subject size=50 required>
+						<input type="text" name=subject size=50 required  value="<%=vo.getSubject()%>">  
+						<!-- value는 따옴표써주는게 좋아 b/c 공백오류 -->
 						</td>
 				</tr>
 				
 				<tr>
 					<th width=20% class="text-right  success">내용</th>
 					<td width=80%>
-						<textarea rows="8" cols="55" name=content required></textarea>
+						<textarea rows="8" cols="55" name=content required><%=vo.getContent()%></textarea>
 						</td>
 				</tr>
 				
@@ -58,7 +69,7 @@ h2 {
 				
 				<tr>
 					<td class="text-center" colspan=2>
-						<input type="submit" value="글쓰기" class="btn btn-sm btn-primary">
+						<input type="submit" value="수정" class="btn btn-sm btn-primary">
 						<input type="button" value="취소" class="btn btn-sm btn-danger" onclick="javascript:history.back()">
 						</td>
 				</tr>

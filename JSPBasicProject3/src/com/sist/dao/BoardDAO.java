@@ -294,29 +294,27 @@ public class BoardDAO {
 				/*★Transaction Program의 필요성 ; 다~ 취소할 수 있음 ★ 
 				-if COMMIT; 이 날아가는데, 위의 sql문이 잘못 됐을 경우를 대비 =  ROLLBACK이 되지 않는 문제 발생
 				-try catch에서 롤백 or 정상수행
-				-UPDATE, DELTE, INSERT를 한 sql에서 섞어서 쓸 경우에 자주 발생한다
+				-UPDATE, DELETE, INSERT를 한 sql에서 섞어서 쓸 경우에 자주 발생한다
 				 */
 			
 				conn.commit();
-				//*************************************//
-				
 				
 			} catch (Exception e) {
 				e.printStackTrace();
 				
-				//***********************************//
+
 				try {
 					conn.rollback();
 				} catch (Exception e2) {}
-				//***********************************//
+
 				
 			}finally {
 				
-				//***********************************//	
+
 				try{
 				    conn.setAutoCommit(true);
 				} catch (Exception ex) {}
-				//***********************************//	
+
 				disConnection();
 			}
 		}

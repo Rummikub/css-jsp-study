@@ -128,7 +128,7 @@ import com.sist.food.FoodVO;
 			boolean check = true;
 			try {
 				getConnection();
-				String sql = "SELECT COUNT(*) FROM resaurant WHERE name = ?";
+				String sql = "SELECT COUNT(*) FROM restaurant WHERE name = ?";
 				ps = conn.prepareStatement(sql);
 				ps.setString(1, name);
 				rs = ps.executeQuery();

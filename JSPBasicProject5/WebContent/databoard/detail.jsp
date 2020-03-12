@@ -8,8 +8,8 @@
    		String strPage=request.getParameter("page");
    		
    		// no=>DAO=> VO=> HTML
-   		BoardDAO dao=new BoardDAO();
-   		BoardVO vo=dao.boardDetailData(Integer.parseInt(no), 0); 
+   		FileBoardDAO dao=new FileBoardDAO();
+   		FileBoardVO vo=dao.boardDetailData(Integer.parseInt(no)); 
    		
    %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -148,10 +148,25 @@ $(function(){
 				</tr>
 				
 				<tr>
-		
 					<th width=20% class="text-center success">제목</th>
 					<td colspan="3" class="text-left "><%=vo.getSubject() %> </td>
 				</tr>
+				
+				<%
+						if(vo.getFilesize()!=0)
+						{
+				%>
+							<tr>
+								<th width=20% class="text-center success">첨부파일</th>
+								<td colspan="3" class="text-left ">
+
+								<a href="download.jsp?fn=<%=vo.getFilename()%>"><%=vo.getFilename() %></a>
+								(<%=vo.getFilesize() %>Bytes) </td>
+							</tr>
+				<%
+						}
+				%>
+				
 				
 				<tr>
 					<td colspan="4" class="text-left" valign="top" height="200">
@@ -163,7 +178,7 @@ $(function(){
 							<a href="reply.jsp?no=<%=vo.getNo() %>&page=<%=strPage %>" class="btn btn-xs btn-success">답변</a>
 							<a href="update.jsp?no=<%=vo.getNo() %>&page=<%=strPage %>" class="btn btn-xs btn-primary">수정</a>
 							<input type=button class="btn btn-xs btn-danger" id="delBtn" value="삭제">
-							<a href="list.jsp?page=<%=strPage %>" class="btn btn-xs btn-info">목록</a> <!--  back을 하면 조회수에 문제가 생김 -->
+							<a href="list.jsp" class="btn btn-xs btn-info">목록</a> 
 				</tr>
 		
 		

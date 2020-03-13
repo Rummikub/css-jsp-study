@@ -11,20 +11,26 @@ import org.jsoup.select.Elements;
 		
 		public class FoodParser {
 
-			FoodVO vo=new FoodVO();
+
 			public static void main(String[] args) {
 				long start = System.currentTimeMillis();
 				
 				int maxPage = 3685;
 				int cnt=0;
-				//FoodDAO dao=new FoodDAO();
 				
+				
+				FoodDAO dao=new FoodDAO();
+				try {
+					dao.getConnection();
+				} catch (Exception e) {
+					System.out.println("error");
+				}
 				for(int page=0; page<maxPage; page++) {
 					
 					
 					try {
 								Document pageDoc = Jsoup.connect("https://www.tripadvisor.co.kr/Restaurants-g294197-oa"+30*page+"-Seoul.html").get();
-								
+								FoodVO vo=new FoodVO();
 								Element detailList = pageDoc.getElementsByAttributeValueStarting("class", "restaurants-list-List__wrapper").first();
 								Elements detailItems = detailList.getElementsByAttribute("data-test");
 								for(int nth=0; nth<detailItems.size(); nth++) {
@@ -33,10 +39,11 @@ import org.jsoup.select.Elements;
 							
 							
 										// name - 광고하는 음식점은 계속 겹치기 때문에 이미 데이터 수집한 곳이면 다음으로 넘어가야 함.
-									/*	String name;
+										String name;
 										try {
 											name = detailDoc.selectFirst("h1.ui_header").text();
 											System.out.println((page+1) + " page " + (nth+1) + " th Restaurant : " + name + "\t================================");
+											vo.setName(name);
 										} catch (Exception e) {
 											System.out.println((page+1) + " page " + (nth+1) + " th Restaurant doesn't have name.");
 											continue;
@@ -46,6 +53,7 @@ import org.jsoup.select.Elements;
 										try {
 											String tags = detailDoc.selectFirst("div.header_links").text();
 											System.out.println(tags);
+											vo.setTags(tags);
 										} catch (Exception e) {
 											System.out.println(name + " doesn't have any tags.");
 										}
@@ -57,6 +65,8 @@ import org.jsoup.select.Elements;
 											String extended = detailDoc.selectFirst("span.extended-address").text();
 											String post = detailDoc.selectFirst("span.postal-code").text();
 											System.out.println(locality+" "+street+" "+extended+" "+post);
+											String addr=locality+street+extended+post;
+											vo.setAddr(addr);
 										} catch (Exception e) {
 											System.out.println(name + " doesn't have address.");
 										}
@@ -65,6 +75,7 @@ import org.jsoup.select.Elements;
 										try {
 											String tel = detailDoc.selectFirst("div.phone").select("span").last().text().replace("+82 ", "0");
 											System.out.println(tel);
+											vo.setTel(tel);
 										} catch (Exception e) {
 											System.out.println(name + " doesn't have telephone number.");
 										}					
@@ -74,6 +85,7 @@ import org.jsoup.select.Elements;
 											String openHours = detailDoc.getElementsByAttributeValueStarting("class", "public-location-hours-LocationHours__hoursOpenerText").select("span").get(2).text();
 											if(!openHours.contains("-")) throw new Exception();
 											System.out.println(openHours);
+											vo.setOpenHours(openHours);
 										} catch (Exception e) {
 											System.out.println(name + " doesn't have open hours.");
 										}
@@ -86,6 +98,7 @@ import org.jsoup.select.Elements;
 												String price = info.substring(4);
 												System.out.println(price);
 											} else throw new Exception();
+											//vo.setPrice(price);
 										} catch (Exception e) {
 											System.out.println(name + " doesn't have price info.");
 										}
@@ -96,6 +109,8 @@ import org.jsoup.select.Elements;
 											double lat = Double.parseDouble(getDataByStart(lat_lng, "\":", ",", 20));
 											double lng = Double.parseDouble(getDataByStart(lat_lng, "longitude\":", ",", 20));
 											System.out.println(lat + " / " + lng);
+											vo.setLat(lat);
+											vo.setLng(lng);
 										} catch (Exception e) {
 											System.out.println((page+1) + " page " + (nth+1) + " th Restaurant doesn't have lat, lng.");
 											continue;
@@ -103,18 +118,20 @@ import org.jsoup.select.Elements;
 											System.out.println("================================================================");
 											if(true) continue;
 										}
-							*/
+							
+
+										
+										
 										// review
 										int rvcnt = 0;
 										while(true) {
 											try {
 												String reviewDoc = detailDoc.selectFirst("#REVIEWS").html();
 												String[] reviews = reviewDoc.split("class=\"info_text");
-												System.out.println(reviewDoc);
-												System.out.println(reviews);
+					
 												
 												
-												/*for(int i=1; i<reviews.length; i++) 
+												for(int i=1; i<reviews.length; i++) 
 												{
 													rvcnt++;
 													String review = reviews[i];
@@ -123,18 +140,19 @@ import org.jsoup.select.Elements;
 													// id
 													String id = review.substring(review.indexOf("<div>")+5, review.indexOf("</div>")).trim();
 													System.out.println(id);
-													
+													vo.setId(id);
 													// bubble
 													int bubble = Integer.parseInt(getDataByStart(review, " bubble_", "\"", 5))/10;
 													System.out.println(bubble);
-													
+													//vo.setBubble(bubble);
 													// regdate
 													String regdate = getDataByStart(review, "ratingDate\" title=\"", "\"", 20);
 													System.out.println(regdate);
-													
+													vo.setRegdate(regdate);
 													// title
 													String title = getDataByEnd(review, ">", "</span></a>", 500);
 													System.out.println(title);
+													vo.setTitle(title);
 													
 													// content
 													String content = getDataByStart(review, "<div class=\"entry\">", "</div>", 3000).trim();
@@ -146,6 +164,7 @@ import org.jsoup.select.Elements;
 													content = content.replace("...", " ");
 													content = content.replace("더 보기", "");
 													System.out.println(content);
+													vo.setContent(content);
 													
 													// expdate
 													try {
@@ -154,21 +173,31 @@ import org.jsoup.select.Elements;
 													} catch (Exception e) {
 														System.out.println("This review doesn't have expdate.");
 													}
+													
 													System.out.println("================================================================");
+													//vo.setExpdate(expdate);
+										
 												} // current page review for end
 									// next review page
 									String nextReviewLink = getDataByEnd(detailDoc.html(), "href=\"", "\">다음</a>", 200);
-									detailDoc = Jsoup.connect("https://www.tripadvisor.co.kr" + nextReviewLink).get();*/
+									detailDoc = Jsoup.connect("https://www.tripadvisor.co.kr" + nextReviewLink).get();
 								} catch (Exception e) {
 								//	System.out.println((page+1) + " page " + (nth+1) + " th Restaurant : " + name + " doesn't have any reviews.");
 									System.out.println("WRONG");
 									break;
 								}
 							} // review end
-							System.out.println("================================================================");
+							
+							
+						System.out.println("================================================================");
 						} // detailItems for end
 						
 						cnt++;
+						dao.printFoodVOData(vo);
+						dao.foodInsert(vo);
+
+						
+					
 	
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -176,7 +205,11 @@ import org.jsoup.select.Elements;
 						
 						continue;
 					} // get pageDoc try catch
+					
+					
 				} // page for end
+				
+
 				long end = System.currentTimeMillis();
 				System.out.println("Crawling end in " + ((end - start) / 1000) + " seconds.");
 			} // main end
@@ -207,3 +240,4 @@ import org.jsoup.select.Elements;
 			}
 
 		}
+		

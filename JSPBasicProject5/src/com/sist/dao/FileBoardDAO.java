@@ -39,6 +39,7 @@ public class FileBoardDAO {
 		
 		try {
 			getConnection();
+			
 			String sql="SELECT no,subject,name,regdate,hit,num "
 					+ "FROM (SELECT no,subject,name,regdate,hit,rownum as num "
 					+ "FROM (SELECT no,subject,name,regdate,hit "

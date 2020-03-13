@@ -2,6 +2,8 @@
     pageEncoding="UTF-8" import="com.sist.dao.*"%>
     
    <%
+   		//500Error
+   		int a=10/0;
    		String no=request.getParameter("no");
   
    		//Detail.jsp에서 값을 받아야 됨
@@ -182,7 +184,7 @@ $(function(){
 				</tr>
 		
 		
-				<!-- 비밀번호 창 숨기기 -->
+				<!--	POST방식의 값넘기기 ; hidden => 비밀번호 창 숨기기 -->
 				<tr id="del" style="display:none">
 						<td colspan="4" class="text-right">
 							비밀번호:	<input type="password" id="pwd" size=10 class="input-sm">

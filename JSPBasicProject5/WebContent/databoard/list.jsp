@@ -56,6 +56,7 @@
 					<tr >
 						<td width=10% class="text-center"><%= vo.getNo() %></td>
 						<td width=45% class="text-left">
+						<!-- 404error  경로명: detail1주면 발생 -->
 							<a href="detail.jsp?no=<%= vo.getNo()%>"><%= vo.getSubject() %></a>
 							</td>
 						<td width=15% class="text-center"><%= vo.getName() %></td>

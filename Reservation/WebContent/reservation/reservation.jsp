@@ -6,37 +6,58 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
 	<title>서:행 #예약하기</title>
 
-	<!-- Google font -->
-	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,900" rel="stylesheet">
 
 	<!-- Bootstrap -->
 	<link type="text/css" rel="stylesheet" href="../css/bootstrap.min.css" />
 
-	<!-- Custom stlylesheet -->
 	<link type="text/css" rel="stylesheet" href="../css/body.css" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  	<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+
+	<!-- Google font -->
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,900" rel="stylesheet">
 
 
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-	<!--[if lt IE 9]>
-		  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-		<![endif]-->
 
+	<!--RUFT
+	<link rel="stylesheet" href="../css/linearicons.css">
+	<link rel="stylesheet" href="../css/font-awesome.min.css">
+	<link rel="stylesheet" href="../css/bootstrap.css">
+	<link rel="stylesheet" href="../css/magnific-popup.css">
+	<link rel="stylesheet" href="../css/nice-select.css">
+	<link rel="stylesheet" href="../css/animate.min.css">
+	<link rel="stylesheet" href="../css/owl.carousel.css">
+	<link rel="stylesheet" href="../css/main.css">  -->
 </head>
 <body >
 
-<header  class= "header" style="background-color: #8050fa;" >
-		<div id="top">
-			<div class="logo">
-					<img alt="" src="../img/logo.png" >
-			</div>			
+	<header id="header">
+		<div class="container box_1170 main-menu">
+			<div class="row align-items-center justify-content-between d-flex">
+				<div id="logo">
+					<a href="#"><img src="../img/logo.png" alt="" title="" /></a>
+				</div>
+				<nav id="nav-menu-container">
+					<ul class="nav-menu">
+						<li class="menu-active"><a href="#">Home</a></li>
+						<li><a href="#">Category</a></li>
+						<li><a href="#">Archive</a></li>
+						<li class="#"><a href="">Pages</a>
+						</li>
+						<li class="menu-has-children"><a href="">Blog</a>
+						</li>
+						<li><a href="#">Contact</a></li>
+					</ul>
+				</nav>
+			</div>
 		</div>
-</header>
+	</header>
 
 
 	<div id="booking" class="section">
@@ -54,7 +75,7 @@
 						</div>
 					</div>
 					
-					
+
 					<div class="col-md-6 col-md-offset-1">
 						<div class="booking-form">
 							<form>
@@ -126,32 +147,43 @@
 							</form>		
 						</div>
 					</div>
-							
-			<!-- Wrapper for slides -->
-			  <div class="carousel-inner">
-		  
-			    <div class="item active">
-			      <img src="https://media-cdn.tripadvisor.com/media/photo-o/11/49/bb/63/wxyz-bar.jpg" alt="">
-			    </div>			
-			    <div class="item">
-			      <img src="https://media-cdn.tripadvisor.com/media/photo-f/11/49/bb/64/wxyz-hall.jpg" alt="">
-			    </div>			
-			     <div class="item">
-			      <img src="https://media-cdn.tripadvisor.com/media/photo-s/14/46/7f/0c/wxyz.jpg" alt="">
-			    </div>			    
-			     <div class="item">
-			      <img src="https://media-cdn.tripadvisor.com/media/photo-s/11/da/2c/2a/caption.jpg" alt="">
-			    </div>			    
-			     <div class="item">
-			      <img src="https://media-cdn.tripadvisor.com/media/photo-f/12/53/2c/54/20180314-183258-largejpg.jpg" alt="">
-			    </div>
-			    
-			  </div>
-				</div>
-			</div>
-		</div>
 
-	</div>
+					
+<div id="myCarousel" class="carousel slide text-center" data-ride="carousel">
+  <!-- Indicators -->
+  <ol class="carousel-indicators">
+    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+    <li data-target="#myCarousel" data-slide-to="1"></li>
+    <li data-target="#myCarousel" data-slide-to="2"></li>
+  </ol>
+
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner" role="listbox" align=center>
+    <div class="item active">
+		<img src="https://media-cdn.tripadvisor.com/media/photo-o/11/49/bb/63/wxyz-bar.jpg" alt="">
+	</div>			
+	<div class="item">
+		<img src="https://media-cdn.tripadvisor.com/media/photo-f/11/49/bb/64/wxyz-hall.jpg" alt="">
+	</div>					    
+		</div>
+  	</div>
+
+  <!-- Left and right controls -->
+  <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+</div>
+</div>
+</div>
+
+
+
 
 
 	<script src="js/jquery.min.js"></script>
@@ -172,7 +204,8 @@
 				$field.removeClass('input-not-empty');
 			}
 		}
-	</script>
+
+</script>
 
 </body><!-- This templates was made by Colorlib (https://colorlib.com) -->
 

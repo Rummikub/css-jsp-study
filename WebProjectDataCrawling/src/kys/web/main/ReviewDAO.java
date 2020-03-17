@@ -21,7 +21,7 @@ GRAGE              NUMBER
  */
 public class ReviewDAO {
 	//Review
-		public void reviewInsert(FoodVO vo) {
+		public void reviewInsert(ReviewVO vo) {
 			try {
 				getConnection();
 				String sql = "INSERT INTO review VALUES((SELECT NVL(MAX(no)+1,1) FROM restaurant),name,tags,addr,tel,openhours,price,lat,lng,?,?,?,?,?,?,?)";

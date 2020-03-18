@@ -1,15 +1,15 @@
+
 package kys.web.main;
 
 import java.sql.*;
-import java.util.*;
+
 
 
 
 public class RestaurantDAO {
 	private Connection conn;
 	private PreparedStatement ps;
-	private ResultSet rs;
-	private final String URL = "jdbc:oracle:thin:@211.238.142.205:1521:XE";
+	private final String URL = "jdbc:oracle:thin:@211.238.142.200:1521:XE";
 
 	public RestaurantDAO() {
 		try {
@@ -60,17 +60,31 @@ public class RestaurantDAO {
 				PRICE             VARCHAR2(100) 
 			MENU              VARCHAR2(100) 
 			RESCHECK          VARCHAR2(1)   
-			GRADE             NUMBER        
+				GRADE             NUMBER        
 
 			 */
 			getConnection();
-			String sql = "INSERT INTO restaurant VALUES((SELECT NVL(MAX(no)+1,1) FROM restaurant),?,?,?,?,?,?,?,?,rNo,id,title,bubble,regdate,content,expdate)";
+			String sql = "INSERT INTO restaurant (no,rname,openhour,info,tel,mapx,mapy,addr1,addr2,price,grade) VALUES("
+					+ "(SELECT NVL(MAX(no)+1,1),?,?,?,?,?,?,?,?,?,?)";
 			ps = conn.prepareStatement(sql);
-			ps.setString(1, vo.getName());
+			ps.setString(1, vo.getRname());
+			ps.setString(2, vo.getOpenhour());
+			ps.setString(3,vo.getInfo());
+			ps.setInt(4, vo.getTel());
+			ps.setInt(5, vo.getMapx());
+			ps.setInt(6, vo.getMapy());
+			ps.setString(7, vo.getAddr1());
+			ps.setString(8, vo.getAddr2());
+			ps.setString(9, vo.getPrice());
+			ps.setInt(10, vo.getGrade());
 
-			ps.executeQuery();
+			ps.executeUpdate();
+
+			
+			
+			
 		} catch (Exception e) {
-			System.out.print("Food Detail Info Insert():");
+			System.out.print("Restaurant Info Insert():");
 			e.printStackTrace();
 		} finally {
 			disConnection();
@@ -78,44 +92,27 @@ public class RestaurantDAO {
 	}
 
 
-	public boolean hasFoodVOName(String name) {
-		boolean check = true;
+
+
+
+
+
+	
+	//Review  	id,grade,regdate,title,content,expdate
+	public void reviewInsert(ReviewVO vo) {
 		try {
 			getConnection();
-			String sql = "SELECT COUNT(*) FROM restaurant WHERE name = ?";
+			String sql = "INSERT INTO review VALUES (reviewno,id,grade,regdate,title,content,expdate) VALUES("
+					+ "(SELECT NVL(MAX(no)+1,1),?,?,?,?,?,?)";
 			ps = conn.prepareStatement(sql);
-			ps.setString(1, name);
-			rs = ps.executeQuery();
-			rs.next();
-			if(rs.getInt(1)==0) {
-				check = false;
-			}
-			rs.close();
+			ps.setString(1, vo.get);
+			ps.executeUpdate();
 		} catch (Exception e) {
-			System.out.println("hasFoodName():");
+			System.out.println("reviewInsert():");
 			e.printStackTrace();
 		} finally {
 			disConnection();
 		}
-		return check;
 	}
 
-	public int noOfName(String name) throws Exception {
-		int no = 0;
-		try {
-			getConnection();
-			String sql = "SELECT no FROM restaurant WHERE name = ?";
-			ps = conn.prepareStatement(sql);
-			ps.setString(1, name);
-			ResultSet rs = ps.executeQuery();
-			rs.next();
-			no = rs.getInt(1);
-			rs.close();
-		} finally {
-			disConnection();
-		}
-		return no;
-	}
-	
-	
-}
+*/

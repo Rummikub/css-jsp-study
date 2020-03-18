@@ -1,5 +1,6 @@
 package kys.web.main;
 //boolean -> varchar2 (1)로 줌
+
 public class RestaurantVO {
 
 			private int no;

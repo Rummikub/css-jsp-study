@@ -1,5 +1,6 @@
 package kys.web.main;
 
+import java.util.*;
 public class ReviewVO {
 
 		private int reviewno;
@@ -8,7 +9,7 @@ public class ReviewVO {
 		private String memberid;
 		private String title;
 		private String photo;
-		private String regdate;
+		private Date regdate;
 		private int posting;
 		private String likecount;
 		private String groupid;
@@ -53,10 +54,11 @@ public class ReviewVO {
 		public void setPhoto(String photo) {
 			this.photo = photo;
 		}
-		public String getRegdate() {
+	
+		public Date getRegdate() {
 			return regdate;
 		}
-		public void setRegdate(String regdate) {
+		public void setRegdate(Date regdate) {
 			this.regdate = regdate;
 		}
 		public int getPosting() {

@@ -35,6 +35,14 @@
   							String id="admin";
   							${id} (X)  ==> <%=id%> (O)
   							---------------------------------------
+  							
+  							<% 
+  								String id=(String)request.getAttribute("id");
+  							%>
+  							<%=id%> 
+  							
+  							--> ${request.getAttribute("id")} == ${id}
+  							
   							request.setAttribute("id",id)
   							${id} (O)  -- key이름을 줌
    --%>

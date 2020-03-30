@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- // SQL등록
+  PreparedStatement, ResultSet -->
+
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+		패키지명 = namespace
+ -->
+
+ <mapper namespace="com.sist.dao.board-mapper">
+ 
+<!-- 기능1) 목록
+
+							★  
+							public BoardVO boardListData(Map map)
+							=> selectOne()
+							
+							★  
+							public List<BoardVO> boardListData(Map map)
+							=> selectList()				=======================> retutn list; 받고 싶을 때
+							 
+												public int movieTotalPage()						
+												resultType="int"
+												
+												List<ZipcodeBean> postfind(String dong)
+												resultType="ZipcodeBean"  parameterType="String" <== 데이터 형이 들어오는 자리
+							
+							Map map=new HashMap();
+							map.put("start",1);
+							map.put("end",10);
+							
+							
+							key 넣어주기 )   ?  대신 #  
+							#{start} => map.get("start") 
+							 #{end}	 => map.get("end")
+-->
+
+	<select id="boardListData" resultType="BoardVO" parameterType="java.util.Map">
+		SELECT no,subject,name,regdate,hit,TO_CHAR(regdate,'YYYY-MM-DD') as dbDay,num
+		FROM (SELECT no,subject,name,regdate,hit,rownum as num
+		FROM (SELECT no,subject,name,regdate,hit
+		FROM board ORDER BY no DESC))
+		WHERE num BETWEEN  #{start} AND #{end}
+	</select>
+	
+<!-- 기능2) 상세보기  -->
+<!-- 
+				public BoardVO boardDetailData(int no)
+				{
+				}
+				
+				Map map=new HashMap();
+				map.put("boardDetailData", "SELECT* FROM board WHERE no=#{no}"}
+
+ -->
+ 		<!--기능0) 총페이지 구하기-->
+ 	<select id="boardTotalPage" resultType="int" >
+ 		SELECT CEIL(COUNT(*)/10.0) FROM board
+ 	</select>
+ 			<!--  반복되는 sql제거 -->
+	<sql id="where-no">
+		WHERE no=#{no}
+	</sql>
+	
+	<select id="boardDetailData" resultType="BoardVO" parameterType="int">
+		SELECT * FROM board 
+		
+		<!--sql 태그 호출-->
+		<include refid="where-no"></include>
+	</select>
+
+	<update id="hitIncrement" parameterType="int">
+			UPDATE board SET
+			hit=hit+1
+			<include refid="where-no"></include>
+	</update>
+
+<!-- 기능3) 글올리기 
+				public void boardInsert (BoardVO vo)
+
+-->
+	<insert id="boardInsert" parameterType="BoardVO">
+	
+		<selectKey	keyProperty="no" resultType="int" order="BEFORE">
+			SELECT NVL(MAX(no)+1,1) as no FROM board
+		</selectKey>
+		<!-- 
+		
+		 		위에 NVL(MAX(no)+1,1) 은나중에 시퀀스 주면 order BEFORE  필요 없을 예정이지만 지금은 일단 알아두기
+				rs.getInt(1) ==> rs.getInt("column명") 
+					★ 컬럼명을 일치시켜야 함(alias 자주 사용)
+		 -->
+		 	INSERT INTO board VALUES(#{no}, #{name},#{subject},#{content},#{pwd},SYSDATE,0)
+	</insert>
+	
+<!-- 기능4) 수정하기  
+		
+			public void boardUpdate(BoardVO vo)
+
+-->	
+
+	<update id="boardUpdate" parameterType="BoardVO">
+		UPDATE board SET 
+		name=#{name},subject=#{subject},content=#{content}
+	<include  refid="where-no"></include>
+	</update>
+	
+<!-- 기능5) 삭제하기  
+
+		public void boardDelete(int no)
+-->
+	<delete id="boardDelete" parameterType="int"></delete>
+	
+	
+</mapper>

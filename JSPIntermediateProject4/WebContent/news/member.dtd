@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+		<member>
+					<list>
+						<no></no>
+						<name></name>
+						<sex></sex>
+						<address></address>
+						<tel></tel>
+						<content></content>
+					</list>
+					
+					<list>
+						<no></no>
+						<name></name>
+						<sex></sex>
+						<address></address>
+						<tel></tel>
+					</list>
+					
+					<list>
+						<no></no>
+						<name></name>
+						<sex></sex>
+						<address></address>
+						<hp></hp>
+						<content></content>
+					</list>
+		</member>
+		
+		list 	: default (반드시 한번만 태그를 사용)
+		list+ : 반드시 한번 '이상' 태그를 사용
+		list* : 0번이상 
+		?		: 사용할 수 도 있고 안 할 수도 있고
+		|		: 선택
+		<!ELEMENT member(list+)>
+		<!ELEMENT list(no,name,sex,address,(tel|hp),content?)
+		<!ELEMENT no (#PCDATA)>  
+		<!ELEMENT name (#PCDATA)>
+		<!ELEMENT sex (#PCDATA)>
+		<!ELEMENT address (#PCDATA)>
+		<!ELEMENT hp (#PCDATA)>
+		<!ELEMENT tel (#PCDATA)>
+		<!ELEMENT content (#PCDATA)>
+-->
+
+		<!ELEMENT member (list+)>
+		<!ELEMENT list (no,name,sex,address,(tel|hp),content?)>
+		<!ELEMENT no (#PCDATA)>  
+		<!ELEMENT name (#PCDATA)>
+		<!ELEMENT sex (#PCDATA)>
+		<!ELEMENT address (#PCDATA)>
+		<!ELEMENT hp (#PCDATA)>
+		<!ELEMENT tel (#PCDATA)>
+		<!ELEMENT content (#PCDATA)>

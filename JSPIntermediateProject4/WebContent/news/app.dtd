@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+		<beans>
+			<bean id="a" class="" jsp="" test="A"/>
+			<bean id="b" class="" test="A"/>
+			<bean id="d" class="" jsp="" test="A"/>
+			<bean id="c" class="" test="B"/>
+			<bean id="e" class="" test="A"/>
+		</beans>
+		
+		<태그>
+			<태그></태그>   <!ELEMENT 태그 (태그명)>
+		</태그>
+		
+		<태그>문자열</태그>		<!ELEMENT 태그 (#PCDATA)>
+		
+		<태그/> 				<! ELEMENT 태그 EMPTY>     => 값(속성)
+											; <img src=""/>
+		데이터형)						
+		ID				==> UNIQUE
+		CDATA		==> 문자열 (공백 허용)
+		NOTATION==> 문자열
+		<a href="/aaa.jsp" class="btn btn-sm btn-primary"></a>
+		IDFEF 		==> 참조
+		
+		REF
+		REFS
+		
+		
+		옵션 ) 
+					#REQUIRED	: NOT NULL
+					#IMPLIED :  속성명을 써도 되고 안써도 되고.... ~ NULL허용
+					#FIXED : 고정 속성 (default)
+-->
+<!ELEMENT beans (bean*)>
+<!ELEMENT bean  EMPTY>
+<!ATTLIST bean id ID #REQUIRED
+						class CDATA #REQUIRED
+						jsp CDATA #IMPLIED
+						test CDATA #FIXED 'A'>

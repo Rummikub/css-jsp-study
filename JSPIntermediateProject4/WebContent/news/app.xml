@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans SYSTEM 'app.dtd'>
+<!--<!ELEMENT beans (bean+)> ==> 한번만 쓰면 에러난다   -->
+<beans>
+	<bean class="com.sist.dao.BoardDAO" id="bdao"/>
+	<bean class="com.sist.dao.MemberDAO" id="mdao"/>
+</beans>

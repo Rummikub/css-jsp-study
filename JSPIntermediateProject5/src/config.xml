@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- getConnection / disConnection -->
+<!DOCTYPE configuration  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-config.dtd"> 
+
+
+
+<!-- (properties?, settings?, typeAliases?, typeHandlers?, objectFactory?, objectWrapperFactory?, 
+ reflectorFactory?, plugins?, environments?, databaseIdProvider?, mappers?)
+ 
+ 
+ >>>순서대로 써야 함.
+ 
+  typeAliases - vo 등록
+  environments
+  mappers - 기능설정
+
+   -->
+<configuration>
+	<typeAliases>
+			<typeAlias type="com.sist.dao.BoardVO" alias="BoardVO"/>
+	</typeAliases>
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC"></transactionManager> <!--  commit, rollback -->
+				<!-- 
+							UNPOOLED  - 연결할때마다 열고 닫고 하는 프로그램 	
+							POOLED - dbcp에 해당
+							
+							자동생성
+							PooledDataSource p=new PooledDataSource();
+							p.setDriver(value값)
+							
+							자동생성2
+							getConection(p.getUrl(),p.getName(),p.getPassword()), disConnection()
+				 -->
+				<dataSource type="POOLED">			<!--  오라클 정보 -->
+					<property name="driver" value="oracle.jdbc.driver.OracleDriver"/>
+					<property name="url" value="jdbc:oracle:thin:@localhost:1521:XE"/>
+					<property name="username" value="hr"/>
+					<property name="password" value="happy"/>
+				</dataSource>
+		</environment>
+	</environments>
+	<!-- 
+				기능이 생길때마다 mapper에 등록한다
+			<!ENTITY mapper 'board-mapper.xml'>
+			=> &nbsp;
+			=> &mapper; => include
+	 -->
+	<mappers>
+		<mapper resource="com/sist/dao/board-mapper.xml" />
+	</mappers>
+</configuration>

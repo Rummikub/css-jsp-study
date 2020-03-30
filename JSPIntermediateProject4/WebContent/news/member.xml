@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!--  DTD 파일 보고 xml의 태그를 만드는 형식으로 작업 /순서. 컬럼.&로우명 일치해야..-->
+<!DOCTYPE member SYSTEM "member.dtd">
+<member>
+	<list>
+		<no>1</no>
+		<name> 홍길동</name>
+		<sex>남자</sex>
+		<address>서울</address>
+		<hp>1111-11111</hp>
+	</list>
+</member>

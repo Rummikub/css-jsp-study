@@ -75,7 +75,15 @@ public class BoardModel {
 			  } catch (Exception ex) {}
 
 		}
-		
+		//update list 
+		  public void boardUpdateData(HttpServletRequest request)
+		   {
+			   String no=request.getParameter("no");
+			   BoardVO vo=BoardDAO.boardUpdateData(Integer.parseInt(no));
+			   request.setAttribute("vo", vo);
+		   }
+		  
+		  
 		// update 
 		public void boardUpdate(HttpServletRequest request, HttpServletResponse response)
 		{    

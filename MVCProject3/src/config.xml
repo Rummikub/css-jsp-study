@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-config.dtd"> 
+
+<configuration>
+
+	<properties resource="db.properties"/>
+	
+	<typeAliases>
+			<typeAlias type="com.sist.dao.CategoryVO" alias="CategoryVO"></typeAlias>
+			<typeAlias type="com.sist.dao.FoodVO" alias="FoodVO"/>
+	</typeAliases>
+	
+	<environments default="development">
+			<environment id="development">  <!-- transactionManager | datasource 꼭 써야 함 -->
+					<transactionManager type="JDBC">
+					<!-- COMMIT, ROLLBACK  1)JDBC :Java에게 맡김 / MANAGED  -->
+					</transactionManager>
+					<dataSource type="POOLED">
+					<!-- 모든 정보를 갖고 있음 (oracle)
+						=UNPOOLED : 연결, 해제
+						=POOLED : connection pool 주소 얻은 후 반환 
+						=JNDI
+					 -->
+					 
+					 	<property name="driver" value="${driver}"/>
+					 	<property name="url" value="${url}"/>
+					 	<property name="username" value="${username}"/>
+					 	<property name="password" value="${password}"/>
+					</dataSource>
+			</environment>
+	</environments>
+	
+	<mappers>
+			<mapper resource="com/sist/dao/food-mapper.xml"></mapper>
+	</mappers>
+</configuration>

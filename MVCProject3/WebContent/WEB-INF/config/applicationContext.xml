@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+		<!-- 우리가 만든 클래스를 등록 bean단위 | package 단위로 가능함-->
+		<beans>
+			<bean id="cateogry" class="com.sist.model.CategoryModel"/>
+			<bean id="middle" class="com.sist.model.MiddleModel"/>
+			<bean id="detail" class="com.sist.model.DetailModel"/>
+			<bean id="news" class="com.sist.news.NewsModel"/>
+		</beans>

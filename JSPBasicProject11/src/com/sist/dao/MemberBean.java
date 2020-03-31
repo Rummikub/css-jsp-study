@@ -8,6 +8,7 @@ public class MemberBean {
 	private String name;
 	private String sex;
 	private String birthday;
+	private String email;
 	private String post;
 	private String addr1;
 	private String addr2;
@@ -24,6 +25,12 @@ public class MemberBean {
 	private String tel2;
 	private String tel3;
 	
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
 	public String getPost1() {
 		return post1;
 	}

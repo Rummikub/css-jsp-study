@@ -145,13 +145,13 @@ public class BoardDAO {
 		session.close();
 	}
 	
-	//수정하기
-	public static BoardVO  boardUpdate(int no)
+	//수정하기 목록출력
+	public static BoardVO  boardUpdateData(int no)
 	{
 		BoardVO vo=new BoardVO();
 		SqlSession session=ssf.openSession(true);
 
-		session.commit();
+	//	session.commit();
 		vo=session.selectOne("boardDetailData",no);
 		session.close();
 		return vo;

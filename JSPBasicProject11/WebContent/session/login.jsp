@@ -24,14 +24,15 @@ function joinMove() {
 
 function login() {
 	var f=document.frm;  //$('form')
-	var  id=f.id.value; // id 입력값 가져옴
+	var id=f.id.value; // id 입력값 가져옴
+
 	if(id.trim()=="")
 	{
 		f.id.focus();
 	 	return;
 	}
 	
-	var  pwd=f.pwd.value; // id 입력값 가져옴
+	var pwd=f.pwd.value; // id 입력값 가져옴
 	if(pwd.trim()=="")
 	{
 		//객체명.이 가진 아이디명. 함수명 
@@ -46,7 +47,7 @@ function login() {
 	<div class="container"></div>
 		<h1 class="text-center">Login</h1>
 		<div class="row">
-			<form method="post" name="frm " action="login_ok.jsp">
+			<form method="post" name="frm"  action="login_ok.jsp">
 			<table class="table table-hover">
 					<tr>
 						<th class="text-right success">ID</th>

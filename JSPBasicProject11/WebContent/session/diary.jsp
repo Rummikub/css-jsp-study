@@ -98,8 +98,8 @@ function change() {
 </script>
 </head>
 <body>
-	<div class="container">
-		<h1 class="text-center"><%=sy %>년 <%=sm %>월 일정</h1>
+	<div class="container">  <!-- SESSION~~~~~~~~~~~~~~  -->
+		<h1 class="text-center"><%=session.getAttribute("name")%>(<%=session.getAttribute("id")%>)&nbsp;<%=sy %>년 <%=sm %>월 일정</h1>
 		<div class="row">
 			<form method="POST" name="frm" action="diary.jsp">
 			<table class="table">
@@ -185,7 +185,11 @@ function change() {
 									if(i==day)
 										back="success";
 				%>
-								<td height="140" class="text-left <%=back %>" valign="top"><h4><font color="<%=color%>"><%=i %></font></h4></td>
+								<td height="140" class="text-left <%=back %>" valign="top"><h4><font color="<%=color%>">
+								
+								<!--!!!!!!!!!SESSION얼마나 유지하는지 알아보는 법  _insert-->
+									<a href="diary_insert.jsp"><%=i %></a>
+								</font></h4></td>
 				<%			// 2주차 줄바꾸기
 								week++;
 								if(week>6)

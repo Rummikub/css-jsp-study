@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--  파일명 xml 없음  -->
+<mapper namespace="com.sist.dao.food-mapper">
+
+	<!--  1단계 : 망고플레이트 첫 메인 페이지-->
+	<select id ="categoryListData" resultType="CategoryVO" >
+			SELECT * FROM cateory
+	</select>
+	
+	<!-- 2단계 중간단 -->
+	<select id="middleListData" resultType="FoodVO" parameterType="int">
+			SELECT no,title,address,tel,image,score
+			FROM  foodhouse
+			WHERE cno=#{cno} 
+	</select>
+	
+	<!-- 3단계 상세보기 -->
+	<select id="detailData" resultType="FoodVO" parameterType="int">
+			SELECT * FROM foodhouse
+			WHERE no=#{no}
+	</select>
+
+
+
+</mapper>

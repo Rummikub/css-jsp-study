@@ -19,21 +19,31 @@
     <ul class="nav navbar-nav">
     					<!-- HOME버튼 누르면 메인으로 와야겠지 
     					어느 폴더로 가든지 한번 밖으로 나와야 되겠지 (in Model) -->
-      <li class="active"><a href="main.do">Home</a></li>
-      <li><a href="member/join.do">회원가입</a></li>
-      <li><a href="board/list.do">게시판</a></li>
-      <li><a href="movie/list.do">영화목록</a></li>
-      <li><a href="movie/reserve/reserve.do">영화예매</a></li>
-      <li><a href="music/music.do">음악목록</a></li>
+      <li class="active"><a href="${pageContext.request.contextPath }/site/main.do">Home</a></li>
+      <li><a href="${pageContext.request.contextPath }/site/member/join.do">회원가입</a></li>
+      <li><a href="${pageContext.request.contextPath }/site/board/list.do">게시판</a></li>
+      <li><a href="${pageContext.request.contextPath }/site/movie/list.do">영화목록</a></li>
+      <li><a href="${pageContext.request.contextPath }/site/movie/reserve/reserve.do">영화예매</a></li>
+      <li><a href="${pageContext.request.contextPath }/site/music/music.do">음악목록</a></li>
     </ul>
   </div>
 </nav>
   
 <div class="container">
+	<div class="col-md-8">
+		
 	
+ 				<!-- 계속 바뀌는 부위  : div가 여러개일때 ( div1 계속 바뀜 ) (div2 고정) -->
+ 	<jsp:include page="${main_jsp}"></jsp:include>
+	
+	</div>
+	
+	<div class="col-md-4">
+		<center>
+			<h1>${side }</h1>
+		</center>
+	</div>
 
- <!-- 계속 바뀌는 부위  : div가 여러개일때 ( div1 계속 바뀜 ) (div2 고정) -->
- 	<jsp:include page="${main_jsp }"></jsp:include>
 </div>
 </body>
 </html>

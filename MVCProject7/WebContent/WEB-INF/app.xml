@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans> 
+		
+		<!-- 이제 모델의 패키지가 여러개니까 늘어난 것이야 -->
+
+	<context:component-scan base-package="com.sist.common.model"/>
+	<context:component-scan base-package="com.sist.movie.model"/>
+	<context:component-scan base-package="com.sist.music.model"/>
+	<context:component-scan base-package="com.sist.board.model"/>
+	<context:component-scan base-package="com.sist.member.model"/>
+	
+</beans>

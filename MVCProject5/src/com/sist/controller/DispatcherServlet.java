@@ -74,7 +74,7 @@ public class DispatcherServlet extends HttpServlet {
 					{
 							RequestMapping rm=m.getAnnotation(RequestMapping.class);
 							// requestMapping 이 가진 값 ("main/main.do") --> value()
-							if(rm.value().equals(cmd))
+							if(cmd.equals(rm.value()))
 							{
 								// 1-1 메소드 실행해라
 								String jsp=(String)m.invoke(obj, request, response);

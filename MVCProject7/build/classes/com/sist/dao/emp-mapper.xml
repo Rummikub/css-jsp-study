@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- <!
+		SELECT empno,ename,hiredate,dname,loc
+		FROM emp,dept
+		WHERE dept.deptno=emp.deptno
+		
+		while(rs.next())
+		{
+			EmpVO vo=new EmpVO()
+			vo.setEmpno(rs.getInt("empno")) 컬럼이름을 넣으면 됨
+			vo.setEname(rs.getString("ename"))
+			vo.setHiredate(rs.getDate("hiredate"))
+			vo.setDname(rs.getString("dname"); ==> vo.getDvo().setDname(rs.getSTring("dname"))
+			vo.setLoc(rs.getString("loc"))==> vo.getDvo().setLoc(rs.getSTring("loc"))
+		ResultSet에서 값을 넣음
+		
+		==> VO에 모든 컬럼명을 만들어놓을 수 없으니까, mapper에 컬럼명 매핑을 다 시켜놓으면 다음 resultMap="id"
+		}
+ > -->
+<mapper namespace="com.sist.emp-mapper">
+
+	<resultMap type="EmpVO" id="empMap">
+	
+			<!--vo.setEmpno(rs.getInt("empno"))
+				
+				실무에서 column이랑 VO의 이름이 다를 때도 resultMap을 사용한다.....
+			
+			-->
+			<result column="empno" property="empno"/>
+				<result column="ename" property="ename"/>
+					<result column="job	" property="job"/>
+						<result column="mgr" property="mgr"/>
+							<result column="hiredate" property="hiredate"/>
+								<result column="sal" property="sal"/>
+									<result column="comm" property="comm"/>
+										<result column="deptno" property="deptno"/>
+								
+										<!--vo.getDvo().setDname(rs.getSTring("dname"))  --> 
+											<result column="dname" property="dvo.dname"/>
+												<result column="loc" property="dvo.loc"/>
+												
+	</resultMap>
+	
+	<select id="empAllData" resultMap="empMap" >
+		SELECT empno,ename,hiredate,dname,loc
+		FROM emp,dept
+		WHERE emp.deptno=dept.deptno
+	</select>
+	
+</mapper>

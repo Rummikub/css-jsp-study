@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+  <display-name>MVCProject5</display-name>
+  
+  
+  <!-- *******************직접 코딩 해본 위치(spring에선 자동)**************************  -->
+  <servlet>
+  		<servlet-name>mvc</servlet-name>
+  		<servlet-class>com.sist.controller.DispatcherServlet</servlet-class>
+  		<!--getInitParameter() 가 DispatcherServlet에서 읽어오는 친구  -->
+  		<init-param>		<!-- ★반드시 이름 동일 (이미정해져있다) -->
+  			<param-name>contextConfigLocation</param-name>  					<!-- bean등록 위치  -->
+  			<param-value>C:\webDev\webStudy\MVCProject5\WebContent\WEB-INF\app.xml</param-value>
+  		</init-param>
+  		<!-- .jar로 만들거야 근데, 
+  				
+  					★★★★★★★ git에올리는 순간 폴더명이 바뀌거든  -->
+  	
+  		<init-param>
+  			<param-name>defaultPath</param-name>
+  			<param-value>C:\webDev\webStudy\MVCProject5\src</param-value>
+  		</init-param>
+  
+  </servlet>
+  
+  <servlet-mapping>
+  		<servlet-name>mvc</servlet-name>
+  		<url-pattern>*.do</url-pattern>
+  </servlet-mapping>
+    <!-- ***********************************************************************  -->
+    
+    
+    
+  <welcome-file-list> 
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+</web-app>

@@ -52,6 +52,14 @@
 										}
 							%>
 							
+							<!-- 
+							<c:forTokens items="${vo.image}" delims="^" var="img">
+								<td>
+									<img src="${img}" width=100%>
+								</td>
+							</c:forTokens>
+							  -->
+							
 						</tr>
 						
 						<tr>

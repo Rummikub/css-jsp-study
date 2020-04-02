@@ -15,6 +15,8 @@ import java.util.*;
 //★★★★★★★★★★★
 import javax.xml.parsers.*;
 import com.sist.model.*;
+import com.sist.temp.Controller;
+
 import org.w3c.dom.*;
 
 
@@ -50,6 +52,14 @@ public class DispatcherServlet extends HttpServlet {
 				Class clsName=Class.forName(cls);
 				//객체생성(메모리할당)
 				Object obj=clsName.newInstance();
+				
+				//★★★★@Controller올린애들만 객체생성해달라 (Annotation읽어와라)
+				//Controller con=(Controller)clsName.getAnnotation(Controller.class);
+				
+				//★★★★ 클래스이름을읽어왔는데.annotation이존재하지 않으면 제외해라 *False ==> annotation 유무여부
+				if(clsName.isAnnotationPresent(Controller.class)==false)
+					continue;
+				
 				
 				System.out.println("id="+id);
 				System.out.println("model="+obj);

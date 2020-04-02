@@ -94,21 +94,6 @@ public class MovieDAO {
 		return list;
 	}
 	
-	/*
-	 					private int mno;
-						private String title;
-						private String poster;
-						private double score;
-						private String genre;
-						private String regdate;
-						private String time;
-						private String grade;
-						private String director;
-						private String actor;
-						private String story;
-						private int type;
-	 */
-	
 	public MovieBean movieDetailData(int mno)
 	{
 		MovieBean vo=new MovieBean();

@@ -29,7 +29,7 @@
         <c:forEach var="vo" items="${clist}">
 				        <li><img src="${vo.poster}" alt="">
 				          <div class="txtoverlay">
-				            <div class="centralise">
+				            <div class="centralise">+
 				              <div class="verticalwrap">
 				                <article>
 				                  <h2 class="heading uppercase">"${vo.title}"</h2>

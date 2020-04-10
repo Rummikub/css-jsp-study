@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.mapper.reply-mapper">
+<!-- 
+	parameterType="java.lang.String" ==> String
+	parameterType="java.lang.Integer" ==> int 
+	parameterType="java.util.Map"	==> hashmap
+ -->	
+	<select id="replyListData" resultType="BoardVO" parameterType="hashmap">
+		SELECT no,subject,name,regdate,hit,group_tab,num
+		FROM (SELECT no,subject,name,regdate,hit,group_tab,rownum as num
+		FROM (SELECT no,subject,name,regdate,hit,group_tab 
+		FROM replyboard ORDER BY group_id DESC, group_step ASC)) 
+		WHERE num BETWEEN #{start} AND #{end}
+	</select>
+	
+	<select id="replyFindData" resultType="BoardVO" parameterType="hashmap">
+		SELECT no,subject,name,regdate,hit
+		FROM replyboard
+		WHERE ${fs} LIKE '%'||#{ss}||'%'
+		<!-- 컬럼명/테이블명 = $ :::::::::::: 일반데이터 = # -->
+	</select>
+	
+	<select id="replyTotalPage" resultType="int">
+	 	SELECT CEIL(COUNT(*)/15.0) FROM replyboard
+	</select>
+	
+	<select id="replyDetailData" resultType="BoardVO" parameterType="int">
+		SELECT * FROM replyboard 
+		WHERE no=#{no}
+	</select>
+
+	<update id="hitIncrement" parameterType="int">
+			UPDATE replyboard SET
+			hit=hit+1
+			WHERE no=#{no}
+	</update>
+	
+	<insert id="replyInsert" parameterType="BoardVO">
+		<selectKey	keyProperty="no" resultType="int" order="BEFORE">
+			SELECT NVL(MAX(no)+1,1) as no FROM replyboard
+		</selectKey>
+		INSERT INTO replyboard(no,name,subject,content,pwd,group_id) VALUES(#{no}, #{name},#{subject},#{content},#{pwd},
+		(SELECT NVL(MAX(group_id)+1,1) FROM replyboard))
+	</insert>
+	
+	<update id="boardUpdate" parameterType="BoardVO">
+		UPDATE replyboard SET 
+		name=#{name},subject=#{subject},content=#{content}
+		WHERE no=#{no}
+	</update>
+	 
+	<select id="getPwd" resultType="string" parameterType="int">
+		SELECT pwd FROM replyboard
+		WHERE no=#{no}
+	</select>
+</mapper>

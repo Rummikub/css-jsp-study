@@ -8,7 +8,7 @@ import com.sist.controller.RequestMapping;
 import java.util.*;
 import com.sist.vo.*;
 import com.sist.dao.*;
-
+//.do가 붙는것은 다 DispatcherServlet이 호출한다는 의미, 주소가 변하는 것은 아님, 화면만 forwarding해서 서블릿을 유지하기 위한 도구
 @Controller
 public class MainModel {
 

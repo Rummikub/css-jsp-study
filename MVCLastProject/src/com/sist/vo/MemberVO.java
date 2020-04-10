@@ -3,7 +3,21 @@ package com.sist.vo;
 import java.util.Date;
 
 public class MemberVO {
-
+/*
+ID       NOT NULL VARCHAR2(50)  
+PWD      NOT NULL VARCHAR2(50)  
+NAME     NOT NULL VARCHAR2(100) 
+EMAIL             VARCHAR2(200) 
+SEX               VARCHAR2(20)  
+BIRTHDAY NOT NULL VARCHAR2(50)  
+POST     NOT NULL VARCHAR2(10)  
+ADDR1    NOT NULL VARCHAR2(500) 
+ADDR2             VARCHAR2(500) 
+TEL               VARCHAR2(50)  
+CONTENT  NOT NULL CLOB          
+REGDATE           DATE          
+ADMIN             CHAR(1)    
+ */
 	private String id;
 	private String pwd;
 	private String name;
@@ -12,10 +26,20 @@ public class MemberVO {
 	private String birthday;
 	private String post;
 	private String addr1;
-	private String add2;
+	private String addr2;
 	private String tel;
 	private Date regdate;
 	private String admin;
+	private String content;
+	private String msg;
+	
+	
+	public String getMsg() {
+		return msg;
+	}
+	public void setMsg(String msg) {
+		this.msg = msg;
+	}
 	public String getId() {
 		return id;
 	}
@@ -64,11 +88,11 @@ public class MemberVO {
 	public void setAddr1(String addr1) {
 		this.addr1 = addr1;
 	}
-	public String getAdd2() {
-		return add2;
+	public String getAddr2() {
+		return addr2;
 	}
-	public void setAdd2(String add2) {
-		this.add2 = add2;
+	public void setAddr2(String addr2) {
+		this.addr2 = addr2;
 	}
 	public String getTel() {
 		return tel;
@@ -87,6 +111,12 @@ public class MemberVO {
 	}
 	public void setAdmin(String admin) {
 		this.admin = admin;
+	}
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
 	}
 	
 }

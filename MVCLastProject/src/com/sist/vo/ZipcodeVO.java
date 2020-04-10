@@ -7,6 +7,17 @@ public class ZipcodeVO {
 	private String gugun;
 	private String dong;
 	private String bunji;
+	///////////new //////////
+	private String address;
+	// 두개만 출력하게 묶기
+	public String getAddress() {
+		return sido+" "+gugun+" "+dong+" "+bunji;
+	}
+	////////////////////////
+	
+	public void setAddress(String address) {
+		this.address = address;
+	}
 	public String getZipcode() {
 		return zipcode;
 	}

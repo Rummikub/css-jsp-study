@@ -5,39 +5,92 @@
 <head>
 <meta content="UTF-8">
 <title>join</title>
- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="css/shadowbox.css">
-<script type="text/javascript" src="js/shadowbox.js"></script>
+<link rel="stylesheet" href="../shadow/css/shadowbox.css">
+<script type="text/javascript" src="../shadow/js/shadowbox.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
+<style type="text/css">
+.row{ 
+	margin: 0px auto;
+	width: 1000px;
+	
+}
+input, select {
+	display: inline-block;
+}
+.table, td {
+	 background-color: white;
+}
+1
+</style>
 <script type="text/javascript">
+
+/* 창을 html형식으로 띄운다 */
 Shadowbox.init({
-	players:['iframe']	
+ 	players:['iframe']
 });
 
-function postfind()
-{
-	window.open("postfind.jsp","postfind","width=480,height=350,scrollbars=yes");
-}
 
-function idcheck()
-{
-	window.open("idcheck.jsp","idcheck","width=380,height=230,scrollbars=no");
-}
+// jquery  ; window.onload ~ main()
+// $(document).ready(function()){})   ==> 앞을 생략해서 아래의 결과가 나온다 (처리함수)
+// var id=document.getElementById('id') : js <=====<input type=text id=id size=10>====> lib : $('#id')
+/* 
+		JavaScript / Jquery  == 태그를 제어하는 DOM 프로그램
+		selector
+		====			
+			1) 태그 => $('태그명') 
+			2) ID   => $('#id')
+			3) CLASS => $('.클래스명')
+			4) 가상  => 자신, 내장객체 => $(this), $(window), $(document)
 
-function join()
-{
-		/*  계층구조
-				태그에 접근 ===>( window).document.form.input/select/textarea
-							 		window
-							 			- document
-							 				-form  ==> form 태그에는 언제나 이름 줘야 해 (폼이 여러개일 수 있으니까)
-							 					-input, select, textarea
-		*/
-		//유효성 검사 (if i==null) ; validation => Spring
-		//document.frm.name ==> $('#name')
-		document.frm.submit(); // 데이터를 전송하라는 의미
-}
+*/
+var i=0;
+var p=0;
+$(function(){
+				// onClick="함수명"
+				/*
+					태그로 제어 : CSS제어, 이벤트 발생
+				*/
+	
+	$('#postBtn').click(function(){
+			// 다음의 창을 띄워라
+			Shadowbox.open({
+				 content:'../member/postfind.do',     // 별도의 창이니까 postfind.jsp에서 처리함 (join아님)
+				 title:'우편번호검색',
+				 // html - iframe (include의미)
+				 player:'iframe',
+				 width:530,
+				 height:400
+			});
+			p=1;
+		});
+	$('#idcheckBtn').click(function(){
+		Shadowbox.open({
+			content:'../member/idcheck.do',
+			title:'아이디 중복체크',
+			player:'iframe',
+			width:390,
+			height:200
+		})
+		i=1;
+	})
+	$('#sendBtn').click(function(){
+		if(i==0)
+		{
+			alert("아이디 중복체크를 하세요");
+		}
+		else
+		{
+			if($('#pwd').val()!=$('#pwd1').val())
+			{
+				alert("비밀번호가 틀립니다!");
+			}
+			else if (p==0)
+			{
+				alert("우편번호를 입력하세요");
+			}
+		}
+	})
+});
 </script>
 <style type="text/css">
  .row {
@@ -51,28 +104,28 @@ function join()
 	<div class="container">
 		<h1 class="text-center">회원가입</h1>
 		<div class="row">
-		<form name="frm" action="join_ok.jsp" method="post">
+		<form name="frm" action="../member/join_ok.do" method="post" id="frm">
 			<table class="table table-hover">
 				<tr>
 					<th width=15% class="danger text-right" >ID</th>
 					<td width=85%>
-						<input type=text name=id size=15 class="input-sm" readonly>
-						<input type=button value="중복체크" class="btn btn-sm btn-danger" onclick="idcheck()">
+						<input type=text name=id size=15 class="input-sm" readonly id="id"> <!-- 자바는 name을 읽고 jquery는 id읽음 -->
+						<input type=button value="중복체크" class="btn btn-sm btn-danger" id="idcheckBtn">
 					</td>
 				</tr>
 				
 				<tr>
 					<th width=15% class="danger text-right" >비밀번호</th>
 					<td width=85%>
-						<input type=password name=pwd size=15 class="input-sm">&nbsp;
-						재입력:<input type=password name=pwd1 size=15 class="input-sm">
+						<input type=password name=pwd size=15 class="input-sm" id="pwd" required>&nbsp;
+						재입력:<input type=password name=pwd1 size=15 class="input-sm" id="pwd1" required>
 					</td>
 				</tr>
 				
 				<tr>
 					<th width=15% class="danger text-right" >이름</th>
 					<td width=85%>
-						<input type=text name=name size=15 class="input-sm">
+						<input type=text name=name size=15 class="input-sm" required>
 					</td>
 				</tr>
 				
@@ -94,23 +147,23 @@ function join()
 				<tr>
 					<th width=15% class="danger text-right" >생일</th>
 					<td width=85%>
-						<input type=date name=birthday size=15 class="input-sm">
+						<input type=date name=birthday size=15 class="input-sm" required>
 					</td>
 				</tr>
 				
 				<tr>
 					<th width=15% class="danger text-right" >우편번호</th>
 					<td width=85%>
-						<input type=text name=post1 size=5 class="input-sm" readonly>   - 
-						<input type=text name=post2 size=5 class="input-sm" readonly>
-						<input type=button class="btn btn-sm btn-primary" value="우편번호검색" onclick="postfind()">
+						<input type=text name=post1 size=5 class="input-sm" readonly required>   - 
+						<input type=text name=post2 size=5 class="input-sm" readonly required>
+						<input type=button class="btn btn-sm btn-primary" value="우편번호검색" id="postBtn">
 					</td>
 				</tr>
 				
 				<tr>
 					<th width=15% class="danger text-right" >주소</th>
 					<td width=85%>
-						<input type=text name=addr1 size=50 class="input-sm" readonly>
+						<input type=text name=addr size=50 class="input-sm" readonly required>
 					</td>
 				</tr>
 				
@@ -143,10 +196,9 @@ function join()
 				
 				<tr>
 					<td colspan=2 class="text-center">
-						<input type=button value="회원가입" class="btn btn-sm btn-info"
-							onclick="join()"
-						>
-						<input type=button value="취소" class="btn btn-sm btn-success"
+						<input type=submit value="회원가입" class="btn btn-sm btn-info"
+						id="sendBtn">
+						<input type=button value="취소" class="btn btn-sm btn-success"	
 							onclick="javascript:history.back()">
 					</td>
 				</tr>

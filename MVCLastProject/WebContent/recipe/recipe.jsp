@@ -13,13 +13,13 @@
 <div class="wrapper row2">
   <div id="services" class="clear"> 
     
-         <div class="group">
+         <div class="row">
 
             <c:forEach var="vo" items="${list }">
                <div class="col-md-3">
                   <div class="thumbnail">
-                     <a href="#"> <img
-                        src="${vo.poster }" alt="Lights" style="width: 100%">
+                     <a href="../recipe/recipe_detail.do?no=${vo.no }"> 
+                     <img src="${vo.poster }" alt="Lights" style="width: 100%">
                         <div class="caption">
                            <p>${vo.title }</p>
                            <p><sub style="color:gray">${vo.chef }</sub></p>
@@ -49,11 +49,11 @@
 				  				<c:set var="type" value=""/>
 				  			</c:if>
 				  			
-				  			<li ${type }><a href="../recipe/recipe.do?page= ${i }">${i }</a></li>
+				  			<li ${type }><a href="../recipe/recipe.do?page=${i}">${i}</a></li>
 				  		</c:forEach>
 				  		
-				  		<c:if test="${endPage<allPage }">
-				   			<li><a href="../recipe/recipe.do?page=${endPage+1 }">&gt;</a></li>
+				  		<c:if test="${endPage<allPage}">
+				   			<li><a href="../recipe/recipe.do?page=${endPage+1}">&gt;</a></li>
 				   		</c:if>
 				</ul>
          </div>

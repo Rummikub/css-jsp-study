@@ -16,15 +16,8 @@
 	<select id="recipeTotalPage" resultType="int">
 		SELECT CEIL(COUNT(*)/20.0) FROM recipe
 	</select>
-	
-	<!-- chef출력 
-	CHEF      NOT NULL VARCHAR2(100) 
-POSTER    NOT NULL VARCHAR2(200) 
-MEM_CONT1          VARCHAR2(20)  
-MEM_CONT3          VARCHAR2(20)  
-MEM_CONT7          VARCHAR2(20)  
-MEM_CONT2          VARCHAR2(20)   -->
-	<select id="chefListData" resultType="Chefvo" parameterType="java.util.Map">
+
+	<select id="chefListData" resultType="ChefVO" parameterType="java.util.Map">
 		SELECT chef,poster,mem_cont1,mem_cont2,mem_cont3,mem_cont7,num
 		FROM (SELECT chef,poster,mem_cont1,mem_cont2,mem_cont3,mem_cont7,rownum as num
 		FROM (SELECT chef,poster,mem_cont1,mem_cont2,mem_cont3,mem_cont7
@@ -36,4 +29,48 @@ MEM_CONT2          VARCHAR2(20)   -->
 		SELECT CEIL(COUNT(*)/30.0) FROM chef
 	</select>
 	
+	<select id="recipeDetailData" resultType="RecipeDetailVO" parameterType="int">
+		SELECT * 
+		FROM recipe_detail
+		WHERE no=#{no}
+	</select>
+	
+	<select id="recipeCount2" resultType="int" parameterType="int">
+		SELECT COUNT(*)
+		FROM recipe_detail
+		WHERE no=#{no}
+	</select>
+	
+	<!-- 페이지를 나눠야 되어서 MAP -->
+	<select id="chefDetailData" resultType="RecipeVO" parameterType="java.util.Map">
+		SELECT no,title,poster,chef,num 
+		FROM (SELECT no,title,poster,chef,rownum as num
+		FROM (SELECT no,title,poster,chef
+		FROM recipe WHERE chef LIKE '%'||#{chef}||'%'))
+		WHERE num BETWEEN #{start} AND #{end}
+	</select>
+	
+	<select id="chefDataTotalPage" resultType="int" parameterType="string">
+		SELECT CEIL(COUNT(*)/20.0)
+		FROM recipe 
+		WHERE chef LIKE '%'||#{chef}||'%'
+	</select>
+	
+	<select id="recipeFindData" resultType="RecipeVO" parameterType="java.util.Map"> 
+									<!-- no가 모델로 넘어오면 카테고리 포함한 내용 가져와야 되니까.. -->
+		SELECT no,title,chef,poster,rownum
+		FROM recipe
+		WHERE rownum&lt;=21
+	<!--★★★★★★★동적쿼리★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★ -->
+		<if test="fd!='전체'"> <!-- fd= 검색어  GETTER가 필요해 (Map | VO)-->
+		<!--  
+		
+			AND title LIKE '%'||#{fd}||'%'  
+			REGEXP_LIKE(title, '면|우동|라면') 세개 다 검색해서 찾아줌... 
+		--> 
+		AND REGEXP_LIKE(title,#{fd})
+		</if>
+	<!--★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★  -->
+	</select>
+
 </mapper>

@@ -7,17 +7,20 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<div class="wrapper row2">
-		<div id="services" class="clear">
-		  <div class="row text-center">
-	     	<img src="reply.PNG">
+	<div	 class="container">
+		<h2>글쓰기</h2>
+		<div class="row">
 		
-			<form method=post  action="../reply/insert_ok.do">
+		
+
+			<form method=post  action="../reply/reply_ok.do">
 			<table class="table table-hover">
 				<tr>
 					<th width=20% class="text-right  success">이름</th>
 					<td width=80%>
 						<input type="text" name=name size=15 required>
+						<input type=hidden name=pno value="${pno}">
+						<!-- ReplyBoardModel에서 넘겨준 pno를 숨겨서 가져와서 /reply_ok에서 처리 -->
 						</td>
 				</tr>
 				
@@ -45,7 +48,7 @@
 				
 				<tr>
 					<td class="text-center" colspan=2>
-						<input type="submit" value="글쓰기" class="btn btn-sm btn-primary">
+						<input type="submit" value="답변" class="btn btn-sm btn-primary">
 						<input type="button" value="취소" class="btn btn-sm btn-danger" onclick="javascript:history.back()">
 						</td>
 				</tr>
@@ -54,6 +57,5 @@
 				</form>
 		</div>
 	</div>
-</div>
 </body>
 </html>

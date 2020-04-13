@@ -1,5 +1,5 @@
 package com.sist.vo;
-
+//일반게시판
 import java.util.*;
 
 public class BoardVO {

@@ -20,7 +20,6 @@ input, select {
 .table, td {
 	 background-color: white;
 }
-1
 </style>
 <script type="text/javascript">
 

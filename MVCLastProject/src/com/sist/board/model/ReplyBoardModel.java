@@ -91,6 +91,8 @@ public class ReplyBoardModel {
 		  try
 		  {
 			request.setCharacterEncoding("UTF-8");
+			
+		  } catch (Exception ex) {}
 			String name=request.getParameter("name");
 			String subject=request.getParameter("subject");
 			String content=request.getParameter("content");
@@ -104,7 +106,7 @@ public class ReplyBoardModel {
 			
 			ReplyBoardDAO.replyInsert(vo);
 					   
-		  } catch (Exception ex) {}
+		 
 		  return "redirect:../reply/list.do";
 	}
 	
@@ -161,7 +163,7 @@ public class ReplyBoardModel {
 			String no=request.getParameter("no");
 			String pwd=request.getParameter("pwd");
 			
-			String db_pwd=ReplyBoardDAO.getPwd(Integer.parseInt(no));
+			String db_pwd=ReplyBoardDAO.replyGetPwd(Integer.parseInt(no));
 			int res=0;
 			if(db_pwd.equals(pwd))
 			{
@@ -178,6 +180,67 @@ public class ReplyBoardModel {
 		  return "../reply/password_check.jsp";
 
 	
+	}
+	//화면을 띄워야 되면 main으로 리턴
+	@RequestMapping("reply/reply.do")
+	public String reply_reply(HttpServletRequest request,HttpServletResponse response)
+	{
+		String pno=request.getParameter("no");// detail.jsp에서 넘어온 번호 처리
+		request.setAttribute("pno", pno);// reply.jsp로 보냄 (pno:글번호)
+		request.setAttribute("main_jsp", "../reply/reply.jsp");
+		return "../main/main.jsp";
+	}
+	
+	//DB연동
+	@RequestMapping("reply/reply_ok.do")
+	public String reply_reply_ok(HttpServletRequest request, HttpServletResponse response)
+	{
+		//받아온 값을 DAO로 연결
+		try{
+			
+			request.setCharacterEncoding("UTF-8");
+			
+		  } catch (Exception ex) {}
+			String name=request.getParameter("name");
+			String subject=request.getParameter("subject");
+			String content=request.getParameter("content");
+			String pwd=request.getParameter("pwd");
+			//vo에 넘길것은 아니고.. 윗번호를 받아오는 용도
+			String pno=request.getParameter("pno");
+
+			BoardVO vo=new BoardVO();
+			vo.setName(name);
+			vo.setSubject(subject);
+			vo.setContent(content);
+			vo.setPwd(pwd);
+
+			//DAO연결 ==> mapper로 이동하겠지  메소드를 만든 후에 다시 돌아와서 | 메소드 호출하고 매개변수 담아주면 끝.
+			ReplyBoardDAO.replyReplyInsert(Integer.parseInt(pno),vo);
+			
+		return "redirect:../reply/list.do"; //reply_list 메소드를 재호출하기 위해 or not, reply_list의 코딩을 또 반복하게 되니까 안됨
+		//.do -> 메소드 호출
+	}
+	
+	@RequestMapping("reply/delete.do")
+	public String reply_delete(HttpServletRequest request,HttpServletResponse response)
+	{	//비밀번호를 입력하는 창을 띄워라
+		String no=request.getParameter("no");
+		request.setAttribute("no",no);
+		request.setAttribute("main_jsp", "../reply/delete.jsp"); 
+		return "../main/main.jsp"; 
+	}
+	//★★★★★★★★정석 JSP★★★★★★★★ 
+	@RequestMapping("reply/delete_ok.do")
+	public String reply_delete_ok(HttpServletRequest request,HttpServletResponse response)
+	{
+		String no=request.getParameter("no");
+		String pwd=request.getParameter("pwd");
+		
+		//DAO연결 (처리해줘야 되잖아)
+		boolean bCheck=ReplyBoardDAO.replyDelete(Integer.parseInt(no), pwd);
+		request.setAttribute("bCheck", bCheck);
+		return "../reply/delete_ok.jsp"; //비밀번호 여부에따라 처리해야되니까 일로 보냈다는데....★★★★★★★★★★★★ 
+		//★★★★★★★★isLogin에서는 AJAX로 처리해버렸다고 하네용.. MemberModel공부를 해야겠네
 	}
 }
 

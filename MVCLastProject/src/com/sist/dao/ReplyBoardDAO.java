@@ -146,13 +146,13 @@ public class ReplyBoardDAO {
 	
 	
 	 
-	public static String getPwd(int no)
+	public static String replyGetPwd(int no)
 	{
 		String pwd="";
 		SqlSession session=ssf.openSession(true);
 		try{
 		
-			pwd=session.selectOne("getPwd",no);
+			pwd=session.selectOne("replyGetPwd",no);
 
 		
 		}catch(Exception ex)
@@ -164,7 +164,80 @@ public class ReplyBoardDAO {
 				session.close();
 		}
 		return pwd;
-	
+	}
+	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★ 트랜젝션 프로그램을 짜본다★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★ 
+	public static void replyReplyInsert(int pno,BoardVO vo)
+	{
+		SqlSession session=null; //Connection
+		try {
+			session=ssf.openSession();
+			BoardVO pvo=session.selectOne("replyParentInfoData",pno);
+			session.update("replyGroupStepIncrement",pvo);
+			
+			//ReplyInsert하기에 앞서서 group_id/step/tab 넣어줘야
+			vo.setGroup_id(pvo.getGroup_id());
+			vo.setGroup_step(pvo.getGroup_step()+1);
+			vo.setGroup_tab(pvo.getGroup_tab()+1);
+			vo.setRoot(pno);
+			
+			//메소드 호출
+			session.insert("replyReplyInsert",vo);
+			session.update("replyDepthIncrement",pno);
+			
+			//Commit
+			session.commit();
+		}catch (Exception ex)
+		{
+			 System.out.println(ex.getMessage());
+			 session.rollback(); //★★★★★★★★★★★★★★★★★★★★★★★★★★★★ transaction *(하나라도 오류나면 롤백시켜라)
+		}finally
+		{
+			if(session!=null)
+				session.close();
+		}
 	}
 	
+	//true; 삭제 ★★★★★★★★★★★★★★★update/delte/insert여러개★★★★★★★★★★ transaction *(실패하면 롤백시켜라)
+	public static boolean replyDelete(int no,String pwd)
+	{
+		boolean bCheck=false;
+		SqlSession session=null;
+		try {
+			session=ssf.openSession();
+			
+			String db_pwd=session.selectOne("replyGetPwd",no);
+			if(db_pwd.equals(pwd))
+			{
+				bCheck=true;
+				BoardVO vo=session.selectOne("replyDeleteInfoData",no);
+				if(vo.getDepth()==0)
+				{
+					//대댓글이 없다는 얘기지
+					session.delete("replyDelete",no);
+				}else
+				{
+					// 대댓이 있으면 처리 별도로 해줘야됨 replySubjectUpdate 의 매개변수 3개를 vo로 잡은거니까.
+					vo.setSubject("관리자가 삭제한 게시물입니다.");
+					vo.setContent("관리자가 삭제한 게시물입니다");
+					vo.setNo(no);
+					session.update("replySubjectUpdate",vo);
+				}
+				//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★ROOT★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+				session.update("replyDepthDecrement",vo.getRoot()); // 상위 번호의 depth를 감소시키는 메소드를 호출했어
+				
+			}else
+			{
+				bCheck=false;
+			}
+			
+			session.commit();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			session.rollback();
+		} finally {
+			if(session!=null)
+				session.close();
+		}
+		return bCheck;
+	}
 }

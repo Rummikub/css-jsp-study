@@ -1,6 +1,6 @@
 package com.sist.vo;
 import java.util.*;
-
+//댓글
 public class ReplyVO {
 
 	private int no;

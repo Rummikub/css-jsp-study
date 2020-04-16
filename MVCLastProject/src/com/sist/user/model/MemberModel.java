@@ -105,7 +105,7 @@ public class MemberModel {
 		}
 		
 		//로그인 완료 처리는 따로 해야되느ㅏ.../????????????????????????
-		@RequestMapping("member/login.do")
+		@RequestMapping("member/login.do")	
 		public String member_login(HttpServletRequest request,HttpServletResponse response)
 		{
 			String id=request.getParameter("id"); //name값  name=id | jquery는 id=id를 읽어온다

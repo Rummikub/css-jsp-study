@@ -18,7 +18,7 @@ $(function(){
 			$('#recipes').html(res);
 		},
 		error:function(e)
-		{
+		{	
 			alert(e);
 		}
 	})

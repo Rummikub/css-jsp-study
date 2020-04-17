@@ -17,7 +17,7 @@
              <div class="caption">
                 <p>${vo.title }</p>
                 <p><sub style="color:gray">${vo.chef }</sub></p>
-             </div>
+             </div>	
           </a>
        </div>
     </div>

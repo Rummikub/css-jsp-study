@@ -33,7 +33,7 @@
 		SELECT * 
 		FROM recipe_detail
 		WHERE no=#{no}
-	</select>
+	</select>	
 	
 	<select id="recipeCount2" resultType="int" parameterType="int">
 		SELECT COUNT(*)

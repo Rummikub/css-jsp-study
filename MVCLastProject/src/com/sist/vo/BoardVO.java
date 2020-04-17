@@ -10,6 +10,8 @@ public class BoardVO {
 	private String pwd;
 	private Date regdate;
 	
+	private String dbday;
+	
 	private int hit;
 	private int group_id;
 	private int group_step;
@@ -21,6 +23,14 @@ public class BoardVO {
 	private String filesize;
 	private int type;
 	
+	
+		
+	public String getDbday() {
+		return dbday;
+	}
+	public void setDbday(String dbday) {
+		this.dbday = dbday;
+	}
 	public int getNo() {
 		return no;
 	}

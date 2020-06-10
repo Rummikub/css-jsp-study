@@ -1,0 +1,6 @@
+127.0.0.1 - - [23/Mar/2020:10:04:06 +0900] "GET / HTTP/1.1" 404 750
+0:0:0:0:0:0:0:1 - - [23/Mar/2020:10:04:06 +0900] "GET /JSPIntermediateProject4/news/sawon.xml HTTP/1.1" 200 2390
+0:0:0:0:0:0:0:1 - - [23/Mar/2020:10:04:06 +0900] "GET /favicon.ico HTTP/1.1" 404 761
+211.238.142.139 - - [23/Mar/2020:11:33:50 +0900] "GET / HTTP/1.0" 404 750
+127.0.0.1 - - [23/Mar/2020:11:49:37 +0900] "GET / HTTP/1.1" 404 750
+0:0:0:0:0:0:0:1 - - [23/Mar/2020:11:49:37 +0900] "GET /JSPIntermediateProject4/WEB-INF/classes/com/sist/xml/SawonXML.java HTTP/1.1" 404 721

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy 2 elements to &apos;JSPInterMediateProject3/src/com.sist.dao&apos;&#x0D;&#x0A;- Original project: &apos;JSPBasicProject10&apos;&#x0D;&#x0A;- Destination element: &apos;JSPInterMediateProject3/src/com.sist.dao&apos;&#x0D;&#x0A;- Original elements:&#x0D;&#x0A;     com.sist.dao.MovieBean.java&#x0D;&#x0A;     com.sist.dao.MovieDAO.java" description="Copy compilation units" destination="=JSPInterMediateProject3/src&lt;com.sist.dao" element1="/src&lt;com.sist.dao{MovieBean.java" element2="/src&lt;com.sist.dao{MovieDAO.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1584680625269" units="2" version="1.0"/>
+</session>

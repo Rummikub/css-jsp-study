@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  한개만 
+		Connection   (SQL문장이 반드시 있어야 함 당연하지. DB에 연동되야 하니까) 
+		Object Relation Mapper = ORM 
+		MyBatis는 DB 연동만 하는 역할! (=Mapper)
+ -->
+ <!--
+ 		default   : 무조건 1번만 사용함   
+  		?	:  한번을 사용 하거나 아예 사용하지 않음
+  		* 	:  여러번 사용 하거나 아예 사용하지 않음
+  	   + 	:  한번 이상은 사용해야 함
+  		| 	:  선택 => tr (th|td) * 여러번 사용 가능
+  		
+  		<html>
+  			<head>  ==> head ? 
+  			</head>
+  			<body>  ==> body *
+  			</body>
+  		</html>
+  -->
+ <!DOCTYPE configuration  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+ <configuration>
+ 	<typeAliases>
+ 	<!-- VO 등록 
+ 			typeAlias* ~ package* (vo개수마다 써주기 번거로워서)
+ 	-->
+ 		<typeAlias type="com.sist.dao.MovieVO" alias="MovieVO"/>
+ 		<typeAlias type="com.sist.dao.MusicVO" alias="MusicVO"/>
+ 	</typeAliases>
+ 	<environments default="development">
+ 		<environment id="development">
+ 			<!-- 
+ 					transactionManager,dataSource => 반드시 한번은 사용해야 하는 태그 (environment+)
+ 			 -->
+ 			 <transactionManager type="JDBC"/> <!-- Commit, Rollback = JDBC(autocommit) , MANAGED(사용자 정의) -->
+ 			 <dataSource type="POOLED"> <!-- UNPOOLED ; 초기 우리가 쓴 방식, POOLED ; 커넥션 풀을 의미 ; 정보를 한번에 넘겨줌-->
+ 			 	<property name="driver" value="oracle.jdbc.driver.OracleDriver"/>
+ 			 	<property name="url" value="jdbc:oracle:thin:@localhost:1521:XE"/>
+ 			 	<property name="username" value="hr"/>
+ 			 	<property name="password" value="happy"/>
+ 			 	<!-- maxActive=8 , maxIdle=8  -->
+ 			 </dataSource>
+ 		</environment>
+ 	</environments>
+ 	<mappers>
+ 		<mapper resource="com/sist/dao/movie-mapper.xml"/><!-- 경로명은 (.) 아니고 (/)를 사용해야 함  -->
+ 	</mappers>
+ </configuration>

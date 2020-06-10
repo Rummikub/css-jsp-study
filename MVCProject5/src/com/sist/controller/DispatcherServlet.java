@@ -1,9 +1,7 @@
 package com.sist.controller;
 
-import java.io.IOException;
+import java.io.*;
 import java.lang.reflect.Method;
-
-import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -24,26 +22,26 @@ public class DispatcherServlet extends HttpServlet {
 	List<String> list=new ArrayList<String>();
 	public void init(ServletConfig config) throws ServletException {
 		
-		//1) web.xml에 있는 PATH를 읽어온다
+		//1) web.xml�뿉 �엳�뒗 PATH瑜� �씫�뼱�삩�떎
 		String path=config.getInitParameter("contextConfigLocation");
-																				// ★★★★★★
+																				// �쁾�쁾�쁾�쁾�쁾�쁾
 		String defaultpath=config.getInitParameter("defaultPath");
-		//2) 패키지명 읽어오기
+		//2) �뙣�궎吏�紐� �씫�뼱�삤湲�
 		
-																					// ★★★★★★
+																					// �쁾�쁾�쁾�쁾�쁾�쁾
 		HandlerMapping hm=new HandlerMapping(path,defaultpath);
-		list=hm.getList(); //com.sist.Model등등을 list에 담아주겠지
+		list=hm.getList(); //com.sist.Model�벑�벑�쓣 list�뿉 �떞�븘二쇨쿋吏�
 		
 	}
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 			
-		//1)읽어온 모델(사용자가 보내준 cmd)에 메모리 할당
+		//1)�씫�뼱�삩 紐⑤뜽(�궗�슜�옄媛� 蹂대궡以� cmd)�뿉 硫붾え由� �븷�떦
 			String cmd=request.getRequestURI(); 
-			System.out.println("전: "+cmd); // ==>/MVCProject5/board/list.do
-			//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★//
+			System.out.println("�쟾: "+cmd); // ==>/MVCProject5/board/list.do
+			//�쁾�쁾�쁾�쁾�쁾�쁾�쁾�쁾�쁾�쁾�쁾�쁾�쁾�쁾�쁾�쁾�쁾�쁾�쁾�쁾�쁾�쁾�쁾�쁾�쁾�쁾�쁾�쁾�쁾�쁾�쁾�쁾�쁾�쁾//
 			cmd=cmd.substring(request.getContextPath().length()+1);
-			System.out.println("후:"+cmd);  // ==> board/detail.d
+			System.out.println("�썑:"+cmd);  // ==> board/detail.d
 			try
 			{
 				/*
@@ -56,29 +54,29 @@ public class DispatcherServlet extends HttpServlet {
 					/* @Controller
 					 * 	class A 
 					 * 
-					 *  class B  -- > continue ; (제외해라)
+					 *  class B  -- > continue ; (�젣�쇅�빐�씪)
 					 *
 					 *	@RequestMapping("main/main.do")
-					 * 메소드1
+					 * 硫붿냼�뱶1
 					 * @RequestMapping("main/list.do")
-					 * 메소드2
+					 * 硫붿냼�뱶2
 					 */
 					if(clsName.isAnnotationPresent(Controller.class)==false)
 						continue;
 					Object obj=clsName.newInstance();
 					
-			// 2) 결과를 배열에 담아라=클래스 이름안에. 메소드를 찾아서 호출
+			// 2) 寃곌낵瑜� 諛곗뿴�뿉 �떞�븘�씪=�겢�옒�뒪 �씠由꾩븞�뿉. 硫붿냼�뱶瑜� 李얠븘�꽌 �샇異�
 					Method[] methods=clsName.getDeclaredMethods();
-									// m안에 @RequestMaaping을 갖고 있겠다!
+									// m�븞�뿉 @RequestMaaping�쓣 媛뽮퀬 �엳寃좊떎!
 					for(Method m:methods)
 					{
 							RequestMapping rm=m.getAnnotation(RequestMapping.class);
-							// requestMapping 이 가진 값 ("main/main.do") --> value()
+							// requestMapping �씠 媛�吏� 媛� ("main/main.do") --> value()
 							if(cmd.equals(rm.value()))
 							{
-								// 1-1 메소드 실행해라
+								// 1-1 硫붿냼�뱶 �떎�뻾�빐�씪
 								String jsp=(String)m.invoke(obj, request, response);
-								//1-2 forward, sendRedirect구분   
+								//1-2 forward, sendRedirect援щ텇   
 								if(jsp.startsWith("redirect"))
 								{
 									//return "redirect:list.do"
@@ -92,7 +90,7 @@ public class DispatcherServlet extends HttpServlet {
 								}
 							
 								
-								//★★★★★void로 리턴하니까 for문을 멈출 수 있음 (조건에 맞을떄 만 돌아갈 수 있게)
+								//�쁾�쁾�쁾�쁾�쁾void濡� 由ы꽩�븯�땲源� for臾몄쓣 硫덉텧 �닔 �엳�쓬 (議곌굔�뿉 留욎쓣�뻹 留� �룎�븘媛� �닔 �엳寃�)
 								return;
 							
 							

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  여러개 for 재사용
+	PreparedStatement, 	ResultSet
+		============
+				=> SQL 		
+										========  
+											=> VO
+ -->
+ <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <!-- 
+ 소속위치
+ 	자바 :  package
+ 	XML :  namespace
+ 	
+ 해당 태그 
+ 	=select : 셀렉문
+ 	=insert
+ 	=update
+ 	=delete
+ 	=sql  : sql문 => 반복이 되는 경우에만 사용
+  -->
+ <mapper namespace="com.sist.dao.movie-mapper">
+ 	<!-- SQL 문장 저장 & VO에 값을 실어서 전해줘야겠지 -->
+ 	<select id="movieAllData" resultType="MovieVO">
+ 		SELECT mno,title,poster 
+ 		FROM movie
+ 		WHERE type=1
+ 	</select >
+ 	<select id="musicAllData" resultType="MusicVO">
+ 		SELECT * FROM music_genie
+ 	</select>
+ </mapper>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper>
+<!-- 
+(cache-ref | cache | resultMap* | parameterMap* | sql* | insert* | update* | delete* | select*)+
+ -->
+ 
+ 	<select id="" resultType="VO" parameterType="String">
+ 	<!--  순서도 조심
+ 	(include | trim | where | set | foreach | choose | if | bind)* 
+ 	
+ 	table(caption?,tr+)
+ 	tr (th|td)*
+ 	==> 캡션 먼저 쓰고  tr 써라
+ 	
+ 	
+ 	parameterType = ? 에 해당. 아래에서는 필요 없다 ("매개변수")
+ 	resultType="리턴형" 
+ 	 -->                                                                          
+ 	 
+ 	 SELECT a,b,c,d FROM board where id=? 
+ 	 </select>
+ 	 
+ 	 
+ 	 <!--  ex)2  매개변수가 두개일 때 / VO가 갖고 있을 때  즉; parmetertype에는 한개의 값만 넣을 수 있음 -->
+ 	<select id="" resultType="VO" parameterType="VO">
+ 	 	 SELECT a,b,c,d FROM board where id=? and pwd=?
+ 	 </select>
+ 	 
+ 	  <!--  ex)3  매개변수가 두개일 때 / VO가 갖고 있지 않을때 -->
+ 	  <select id="" resultType="VO" parameterType="Map">
+ 	 	 SELECT a,b,c,d FROM board where id=? and pwd=?
+ 	 	 WHERE num BETWEEN ? AND ?
+ 	 </select>
+ 	 
+ 	 
+ 	 <!-- NOT NULL 속성 -->
+ 	 <insert id=""></insert>
+ 	 <update id=""></update>
+ 	 
+ 	 
+</mapper>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.mapper.member-mapper">
+	<select id="postfindData" resultType="ZipcodeVO" parameterType="string">
+		SELECT zipcode,sido,gugun,dong,NVL(bunji,' ') as bunji
+		FROM zipcode
+		WHERE dong LIKE '%'||#{dong}||'%'
+	</select>
+	<select id="idcheckData" resultType="int" parameterType="string">
+		SELECT COUNT(*) FROM member
+		WHERE id=#{id}
+	</select>		
+	<!-- 
+	ID       NOT NULL VARCHAR2(50)  
+	PWD      NOT NULL VARCHAR2(50)  
+	NAME     NOT NULL VARCHAR2(100) 
+	EMAIL             VARCHAR2(200) 
+	SEX               VARCHAR2(20)  
+	BIRTHDAY NOT NULL VARCHAR2(50)  
+	POST     NOT NULL VARCHAR2(10)  
+	ADDR1    NOT NULL VARCHAR2(500) 
+	ADDR2             VARCHAR2(500) 
+	TEL               VARCHAR2(50)  
+	CONTENT  NOT NULL CLOB          
+	REGDATE           DATE          
+	ADMIN             CHAR(1)    
+	 -->
+	<insert id="memberInsert" parameterType="MemberVO">
+			INSERT INTO member VALUES(
+			#{id},
+			#{pwd},
+			#{name},
+			#{email,jdbcType=VARCHAR},
+			#{sex},
+			#{birthday},
+			#{post},
+			#{addr1},
+			#{addr2},
+			#{tel},
+			#{content},
+			SYSDATE,
+			'n')
+	</insert>
+	<select id="idCount" resultType="int" parameterType="string">
+		SELECT COUNT(*) FROM member
+		WHERE id=#{id}
+	</select>					<!-- ?이름이랑 유저인지 확인하는것을 한번에 처리하려고 vo로 받음 -->
+	<select id="getPwd" resultType="MemberVO" parameterType="string">
+		SELECT pwd,name,admin FROM member
+		WHERE id=#{id}
+	</select>
+</mapper>

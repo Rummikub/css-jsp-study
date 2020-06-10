@@ -1,0 +1,18 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    
+    
+    pageEncoding="UTF-8" import="java.io.*, java.net.*"%>
+
+    
+   <%
+  			/* GET방식은 톰캣안에서 처리 
+  			setcharacterencoding= POST방식할때만 해줘야 한다*/  		
+  			
+  			String fn=request.getParameter("fn");
+   
+   			// header(저장할까요)+data(다운하기) = 파일 다운로드
+   					// Content-Disposition : 다운로드 창 띄움
+   			response.setHeader("Content-Disposition", "attachment;filename=" 
+   											+URLEncoder.encode(fn,"UFT-8"));
+ 
+   %>

@@ -197,7 +197,7 @@ public class ReplyBoardDAO {
 		}
 	}
 	
-	//true; 삭제 ★★★★★★★★★★★★★★★update/delte/insert여러개★★★★★★★★★★ transaction *(실패하면 롤백시켜라)
+	//true; 삭제 ★★★★★★★★★★★★★★★update/delete/insert여러개★★★★★★★★★★ transaction *(실패하면 롤백시켜라)
 	public static boolean replyDelete(int no,String pwd)
 	{
 		boolean bCheck=false;

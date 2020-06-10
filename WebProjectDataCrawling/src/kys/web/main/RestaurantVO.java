@@ -1,6 +1,6 @@
 package kys.web.main;
-//boolean -> varchar2 (1)로 줌
 
+//boolean -> varchar2 (1)로 줌
 public class RestaurantVO {
 
 			private int no;
@@ -8,10 +8,10 @@ public class RestaurantVO {
 			private String openhour;
 			private String rphoto;
 			private String info;
-			private int tel;
+			private String tel;
 			private String link;
-			private int mapx;
-			private int mapy;
+			private double mapx;
+			private double mapy;
 			private String addr1;
 			private String addr2;
 			private int rank;
@@ -19,6 +19,7 @@ public class RestaurantVO {
 			private String menu;
 			private String rescheck;
 			private int grade;
+			private String post;
 			public int getNo() {
 				return no;
 			}
@@ -49,10 +50,10 @@ public class RestaurantVO {
 			public void setInfo(String info) {
 				this.info = info;
 			}
-			public int getTel() {
+			public String getTel() {
 				return tel;
 			}
-			public void setTel(int tel) {
+			public void setTel(String tel) {
 				this.tel = tel;
 			}
 			public String getLink() {
@@ -61,16 +62,16 @@ public class RestaurantVO {
 			public void setLink(String link) {
 				this.link = link;
 			}
-			public int getMapx() {
+			public double getMapx() {
 				return mapx;
 			}
-			public void setMapx(int mapx) {
+			public void setMapx(double mapx) {
 				this.mapx = mapx;
 			}
-			public int getMapy() {
+			public double getMapy() {
 				return mapy;
 			}
-			public void setMapy(int mapy) {
+			public void setMapy(double mapy) {
 				this.mapy = mapy;
 			}
 			public String getAddr1() {
@@ -114,6 +115,12 @@ public class RestaurantVO {
 			}
 			public void setGrade(int grade) {
 				this.grade = grade;
+			}
+			public String getPost() {
+				return post;
+			}
+			public void setPost(String post) {
+				this.post = post;
 			}
 			
 }

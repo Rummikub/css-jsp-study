@@ -1,0 +1,9 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    
+    
+    pageEncoding="UTF-8" import="java.io.*, java.net.*"%>
+
+    
+   <%
+  			/* GET방식은 톰캣안에서 처리 setcharacterencoding= POST방식할때만 변환 해줘야 한다*/  				
+   %>
